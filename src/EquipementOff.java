@@ -1,16 +1,24 @@
 public class EquipementOff {
 
-    String type;
+    KindItemOff type;
     String nom;
-    int levelAtk;
+    int ptsAtk;
 
-    public EquipementOff(String type, String nom, int atk) {
+    public EquipementOff(KindItemOff type, String nom, int atk) {
         this.type = type;
         this.nom = nom;
-        this.levelAtk = atk;
+        this.ptsAtk = atk;
+        switch (type) {
+            case Arme -> {
+                this.ptsAtk = 4;
+            }
+            case Sort -> {
+                this.ptsAtk = 5;
+            }
+        }
     }
 
     protected String getOffEquipment() {
-        return type + nom + levelAtk;
+        return type + nom + ptsAtk;
     }
 }
