@@ -2,6 +2,9 @@ package donjon;
 
 import java.util.Scanner;
 
+/**
+ * Where the game start to run
+ */
 public class Main {
     static boolean continuer = true;
     public static void main(String[] args) {
@@ -9,7 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (continuer) {
             //Initialise le donjon
-            Game game = new Game();
+            Game game = new Game(scanner);
             // Lance la création d'un nouveau personnage ou permet de quitter
             Menu newPerso = new Menu(scanner, game);
             newPerso.start();

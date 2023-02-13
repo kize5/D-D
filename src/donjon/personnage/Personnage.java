@@ -8,7 +8,14 @@ abstract public class Personnage {
     private final int hp;
     private final int atk;
 
-    public Personnage(String nom, KindClass type, int hp, int atk) {
+    /**
+     * Construct for set up a new personnage
+     * @param nom
+     * @param type
+     * @param hp
+     * @param atk
+     */
+    protected Personnage(String nom, KindClass type, int hp, int atk) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;

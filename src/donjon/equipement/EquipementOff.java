@@ -1,15 +1,15 @@
 package donjon.equipement;
 
-import donjon.KindItemOff;
-
 abstract public class EquipementOff {
 
     KindItemOff type;
     String nom;
     int ptsAtk;
 
-    //Define defensive equipment
-    public EquipementOff(KindItemOff type, String nom, int atk) {
+    /**
+     * Construct for all offensive equipment
+     */
+    protected EquipementOff(KindItemOff type, String nom, int atk) {
         this.type = type;
         this.nom = nom;
         this.ptsAtk = atk;

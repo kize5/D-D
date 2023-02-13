@@ -1,5 +1,4 @@
 package donjon.equipement;
-import donjon.KindItemDef;
 
 abstract public class EquipementDef {
 
@@ -7,8 +6,17 @@ abstract public class EquipementDef {
     String nom;
     int levelDef;
 
-    //Define defensive equipment
-    public EquipementDef(KindItemDef type, String nom, int def) {
+    /**
+     *
+     */
+
+    /**
+     * Construct for all defensive equipment
+     * @param type Type of defensive equipment
+     * @param nom Name of defensive equipment
+     * @param def Point of def gain with this defensive equipment
+     */
+    protected EquipementDef(KindItemDef type, String nom, int def) {
         this.type = type;
         this.nom = nom;
         this.levelDef = def;
