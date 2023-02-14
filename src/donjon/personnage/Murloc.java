@@ -6,8 +6,6 @@ import donjon.KindClass;
  * Class to create a new murloc
  */
 public class Murloc extends Personnage {
-
-
     /**
      * Construct to create a new murloc
      * @param nom Nom of new murloc
@@ -18,5 +16,6 @@ public class Murloc extends Personnage {
     public Murloc(String nom, KindClass type, int hp, int atk) {
         super(nom, type, hp, atk);
     }
+
 
 }

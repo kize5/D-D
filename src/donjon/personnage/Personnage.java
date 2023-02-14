@@ -7,19 +7,32 @@ abstract public class Personnage {
     private final KindClass type;
     private final int hp;
     private final int atk;
+    private final int offItem;
+    private final int defItem;
 
     /**
      * Construct for set up a new personnage
-     * @param nom
-     * @param type
-     * @param hp
-     * @param atk
+     * @param nom Nom du perso
+     * @param type Type du perso
+     * @param hp Health points
+     * @param atk Attack points
      */
     protected Personnage(String nom, KindClass type, int hp, int atk) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
         this.atk = atk;
+        this.offItem = 0;
+        this.defItem = 0;
+    }
+
+    protected Personnage(String nom, KindClass type, int hp, int atk, int offItem, int defItem) {
+        this.type = type;
+        this.nom = nom;
+        this.hp = hp;
+        this.atk = atk;
+        this.defItem = defItem;
+        this.offItem = offItem;
     }
 
     public String getNom() {

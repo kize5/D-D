@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static donjon.WaitSecAndASCII.*;
 
 /**
- * Where the menu display information and personnage are setup bye user
+ * Where the menu display information and personnage are set up by user
  */
 public class Menu {
     private final Scanner scanner;
@@ -150,7 +150,6 @@ public class Menu {
             this.game.setPlayer(newP);
         } else {
             modifyPersonnage();
-            // modifyPersonnage() implementation modif stat à revoir
         }
     }
 
@@ -166,14 +165,6 @@ public class Menu {
         int atk = Integer.parseInt(scanner.nextLine());
         Personnage newPmod = chooseClass(pClass, name, health, atk);
         welcomeNewHero(newPmod);
-//        donjon.personnage.Personnage newPmod = new donjon.personnage.Personnage(name, pClass);
-//        newPmod.atk = atk;
-//        newPmod.hp = health;
-//        slowPrint();("Bienvenue à toi " + newPmod.nom);
-//        slowPrint();("Tu es donc un " + newPmod.type);
-//        slowPrint();("Tu possèdes *" + newPmod.hp + "* point de vie");
-//        slowPrint();("Et ton score d'attaque est de *" + newPmod.atk +"*");
-//        this.game.setPlayer(newPmod);
     }
 
     private int generateRandomHP(KindClass pClass) {

@@ -6,8 +6,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static donjon.WaitSecAndASCII.justwaitASec;
-import static donjon.WaitSecAndASCII.slowPrint;
+import static donjon.WaitSecAndASCII.*;
 
 /**
  * Where the logic of the game is created
@@ -107,7 +106,7 @@ public class Game {
       */
     private void winOrRip() {
         justwaitASec(300);
-        slowPrint("Bien joué, tu as survécu au donjon (J'y croyais pas au début .. \n)", 30);
+        slowPrint(drawGG(), 3);
         justwaitASec(500);
         slowPrint("(づ｡◕‿‿◕｡)づ ***--^^-- GG --^^--*** (づ｡◕‿‿◕｡)づ \n", 30);
     }
