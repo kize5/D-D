@@ -192,7 +192,7 @@ public class Menu {
      */
     protected void leave() {
         slowPrint("Tu es donc un lâche... Adieu (Mais merci quand même d'avoir joué !) \n", 30);
-        game.leave = true;
+        game.leaveGame = true;
     }
 }
 

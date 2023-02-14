@@ -1,7 +1,12 @@
 package donjon;
 
+import donjon.equipement.Arme;
+import donjon.equipement.KindItemOff;
+import donjon.personnage.Murloc;
 import donjon.personnage.Personnage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,32 +20,26 @@ public class Game {
     private final int BoardCases;
     private final Scanner scanner;
     private int PlayerPose;
-    public boolean leave;
     Personnage player;
+    private KindCase typeCase;
+    private boolean running;
+    private boolean playerAlive;
+    public boolean leaveGame;
+
+    List<Case> myCaseList;
 
     /**
      * init a new game
       */
-
     public Game(Scanner scanner) {
         this.scanner = scanner;
         BoardCases = 64;
         PlayerPose = 1;
-        leave = false;
-//        slowPrint();("Tape 'a' puis 'entrée' pour recommencer");
-//        slowPrint();("Tape 'exit' pour quitter");
-//        String go = scanner.nextLine();  // Read user input
-//        while (Objects.equals(go, "a")) {
-
-//        }
-//        if (Objects.equals(go, "exit")) {
-//            donjon.Menu newp = new donjon.Menu(scanner);
-//            newp.leave();
-//        } else {
-//            slowPrint();("Saise incorrecte (game)");
-//            donjon.Menu newp = new donjon.Menu(scanner);
-//            newp.createPersonnage();
-//        }
+        leaveGame = false;
+        running = false;
+        playerAlive = false;
+        this.myCaseList = new ArrayList<>();
+        myCaseList.add(new LootCase());
     }
 
     /**
@@ -48,16 +47,14 @@ public class Game {
      */
     public void setPlayer(Personnage newP) {
         player = newP;
-//        slowPrint();(newP);
     }
-
 
     /**
      * Main method, call the other to make player move and win or not
      */
     public void run() {
         //Break infint loop of continuer to end this game
-        if (leave) {
+        if (leaveGame) {
             Main.continuer = false;
             return;
         }
@@ -75,6 +72,7 @@ public class Game {
     private void playerMove() {
         while (PlayerPose != BoardCases && PlayerPose < 64) {
             rollDice();
+            checkCase();
             justwaitASec(250);
             slowPrint(PlayerPose + " / " + BoardCases + " \n", 30);
         }
@@ -87,6 +85,21 @@ public class Game {
         }
     }
 
+    public void checkCase() {
+        System.out.println("check case implement");
+        switch (typeCase) {
+            case Loot -> System.out.println("loot");
+            case Ennemie -> System.out.println("enemi");
+            case Vide -> System.out.println("safe");
+        }
+    }
+
+    private void fight() {
+    }
+    private void loot() {
+    }
+    private void safe() {
+    }
 
     /**
      * Roll the dice to make player move

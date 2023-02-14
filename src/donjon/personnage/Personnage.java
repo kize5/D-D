@@ -50,15 +50,16 @@ abstract public class Personnage {
 
     @Override
     public String toString() {
-        return "donjon.personnage.Personnage{" +
+        return "Personnage{" +
                 "nom='" + nom + '\'' +
                 ", type=" + type +
                 ", hp=" + hp +
                 ", atk=" + atk +
+                ", offItem=" + offItem +
+                ", defItem=" + defItem +
                 '}';
     }
-
-    /*
+/*
     public void getNameClass(String name, String classe) {
         this.nom = name;
         this.type = classe;
