@@ -1,6 +1,6 @@
 package donjon.personnage;
 
-import donjon.KindClass;
+import donjon.KindEnnemi;
 
 /**
  * Class to create a new murloc
@@ -13,7 +13,7 @@ public class Murloc extends Personnage {
      * @param hp Heal points of new murloc
      * @param atk Attack points of new murloc
      */
-    public Murloc(String nom, KindClass type, int hp, int atk) {
+    public Murloc(String nom, KindEnnemi type, int hp, int atk) {
         super(nom, type, hp, atk);
     }
 

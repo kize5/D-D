@@ -1,11 +1,10 @@
 package donjon.ennemi;
-import donjon.KindClass;
 
-abstract public class Ennemi {
+public class Ennemi {
 
     private final String nom;
-    private final KindClass type;
-    private final int hp ,atk;
+    private final KindEnnemi type;
+    private int hp ,atk;
 
 
     /**
@@ -15,7 +14,7 @@ abstract public class Ennemi {
      * @param hp Health points of the enemy
      * @param atk Attack points of the enemy
      */
-    public Ennemi(String nom, KindClass type, int hp, int atk) {
+    public Ennemi(KindEnnemi type, String nom, int hp, int atk) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
@@ -25,12 +24,15 @@ abstract public class Ennemi {
     public String getNom() {
         return nom;
     }
-    public KindClass getType() {
+
+    public KindEnnemi getType() {
         return type;
     }
+
     public int getHp() {
         return hp;
     }
+
     public int getAtk() {
         return atk;
     }

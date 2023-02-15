@@ -1,6 +1,6 @@
 package donjon.personnage;
 
-import donjon.KindClass;
+import donjon.KindEnnemi;
 
 /**
  * Class to create a new war
@@ -14,7 +14,7 @@ public class War extends Personnage{
      * @param hp Heal points of new war
      * @param atk Attack points of new war
      */
-    public War(String nom, KindClass type, int hp, int atk) {
+    public War(String nom, KindEnnemi type, int hp, int atk) {
         super(nom, type, hp, atk);
     }
 }

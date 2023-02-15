@@ -34,12 +34,24 @@ public class Game {
     public Game(Scanner scanner) {
         this.scanner = scanner;
         BoardCases = 64;
-        PlayerPose = 1;
+        PlayerPose = 0;
         leaveGame = false;
         running = false;
         playerAlive = false;
         this.myCaseList = new ArrayList<>();
+        myCaseList.add(new EmptyCase());
+        myCaseList.add(new EnemiCase());
         myCaseList.add(new LootCase());
+        myCaseList.add(new EmptyCase());
+        myCaseList.add(new EnemiCase());
+        myCaseList.add(new LootCase());
+
+//        myCaseList.add(KindCase.Ennemie);
+//        myCaseList.add(KindCase.Vide);
+//        myCaseList.add(KindCase.Loot);
+//        myCaseList.add(KindCase.Ennemie);
+//        myCaseList.add(KindCase.Vide);
+//        System.out.println(myCaseList.get(1));
     }
 
     /**
@@ -87,11 +99,22 @@ public class Game {
 
     public void checkCase() {
         System.out.println("check case implement");
-        switch (typeCase) {
-            case Loot -> System.out.println("loot");
-            case Ennemie -> System.out.println("enemi");
-            case Vide -> System.out.println("safe");
-        }
+        myCaseList.get(PlayerPose).apply(player);
+//        if ( == KindCase.Loot) {
+//            new LootCase(player);
+//        }
+//        if (myCaseList.get(PlayerPose) == KindCase.Ennemie) {
+//            new EnemiCase(player);
+//        }
+//        if (myCaseList.get(PlayerPose) == KindCase.Vide) {
+//            new EmptyCase();
+//        }
+
+//        switch (typeCase) {
+//            case Loot -> new LootCase(player);
+//            case Ennemie -> System.out.println("enemy");
+//            case Vide -> System.out.println("safe");
+//        }
     }
 
     private void fight() {
@@ -108,7 +131,7 @@ public class Game {
 //        Random r = new Random();
 //        int random = r.nextInt((6 - 1) + 1) + 1;
         int randomNum = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        PlayerPose += randomNum;
+        PlayerPose += 1;
         if (PlayerPose >= 64) {
             PlayerPose = 64;
         }

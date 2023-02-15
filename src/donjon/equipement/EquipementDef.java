@@ -20,10 +20,29 @@ abstract public class EquipementDef {
         this.type = type;
         this.nom = nom;
         this.levelDef = def;
-//        switch (type) {
-//            case Bouclier -> this.levelDef = 4;
-//            case IceBarrier -> this.levelDef = 5;
-//            case Default -> this.levelDef = 0;
-//        }
+    }
+
+    public KindItemDef getType() {
+        return type;
+    }
+
+    public void setType(KindItemDef type) {
+        this.type = type;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setLevelDef(int levelDef) {
+        this.levelDef = levelDef;
+    }
+
+    public int getLevelDef() {
+        return levelDef;
     }
 }

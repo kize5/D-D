@@ -1,14 +1,14 @@
 package donjon.personnage;
-import donjon.KindClass;
+import donjon.KindEnnemi;
 
 abstract public class Personnage {
 
     private final String nom;
-    private final KindClass type;
-    private final int hp;
+    private final KindEnnemi type;
+    private int hp;
     private final int atk;
-    private final int offItem;
-    private final int defItem;
+    private int offItem;
+    private int defItem;
 
     /**
      * Construct for set up a new personnage
@@ -17,7 +17,7 @@ abstract public class Personnage {
      * @param hp Health points
      * @param atk Attack points
      */
-    protected Personnage(String nom, KindClass type, int hp, int atk) {
+    protected Personnage(String nom, KindEnnemi type, int hp, int atk) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
@@ -26,7 +26,7 @@ abstract public class Personnage {
         this.defItem = 0;
     }
 
-    protected Personnage(String nom, KindClass type, int hp, int atk, int offItem, int defItem) {
+    protected Personnage(String nom, KindEnnemi type, int hp, int atk, int offItem, int defItem) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
@@ -38,14 +38,42 @@ abstract public class Personnage {
     public String getNom() {
         return nom;
     }
-    public KindClass getType() {
+    public KindEnnemi getType() {
         return type;
     }
     public int getHp() {
         return hp;
     }
+    public void setHp(int hp){
+        this.hp = hp;
+    }
+
     public int getAtk() {
         return atk;
+    }
+
+    public void setoffItem (int newOffItem) {
+        this.offItem = newOffItem;
+    }
+
+    public int getoffItem (){
+        return offItem;
+    }
+
+    public int getOffItem() {
+        return offItem;
+    }
+
+    public void setOffItem(int offItem) {
+        this.offItem = offItem;
+    }
+
+    public int getDefItem() {
+        return defItem;
+    }
+
+    public void setDefItem(int defItem) {
+        this.defItem = defItem;
     }
 
     @Override

@@ -20,7 +20,30 @@ abstract public class EquipementOff {
 //        }
     }
 
-    protected String getOffEquipment() {
-        return type + nom + ptsAtk;
+
+
+    public KindItemOff getType() {
+        return type;
     }
+
+    public void setType(KindItemOff type) {
+        this.type = type;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getPtsAtk() {
+        return ptsAtk;
+    }
+
+    public void setPtsAtk(int ptsAtk) {
+        this.ptsAtk = ptsAtk;
+    }
+
 }

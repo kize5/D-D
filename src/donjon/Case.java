@@ -1,8 +1,8 @@
 package donjon;
 
+import donjon.personnage.Personnage;
+
 public interface Case {
 
-    default Object apply(Object obj) {
-        return obj;
-    }
+    void apply(Personnage player);
 }
