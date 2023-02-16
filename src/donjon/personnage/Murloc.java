@@ -18,7 +18,10 @@ public class Murloc extends Personnage {
     }
 
     @Override
-    public boolean isUsableEquipement(Item item) {
+    public boolean isUsableEquipementOff(Item item) {
+        return true;
+    }
+    public boolean isUsableEquipementDeff(Item item) {
         return true;
     }
 

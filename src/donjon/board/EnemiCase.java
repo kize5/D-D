@@ -71,7 +71,7 @@ public class EnemiCase implements Case {
         slowPrint("Une lumière dans l'obscurité, une pioche.. Oh non un vieux kobold moche t'attaque ! \n", 30);
     }
     private void spawnMage() {
-        ennemi = new Ennemi(KindEnnemi.Wizard, "mage noir", 9, 2);
+        ennemi = new Ennemi(KindEnnemi.Wizard, "mage noir", 9, 3);
         slowPrint(drawBadWizard(), 3);
         slowPrint("L'air est plus lourd, une silhouette encapuchonné apparait depuis les ombres toi, un mage, un mage noir même ...  \n", 30);
     }

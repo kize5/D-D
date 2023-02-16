@@ -9,21 +9,23 @@ public class Fight {
     int playerAtk;
     int enemyHp;
     int enemyAtk;
+    int playerItemDef;
+    int playerItemOff;
 
     public Fight(Personnage player, Ennemi enemy) {
         this.enemyHp = enemy.getHp();
         this.playerHp = player.getHp();
         this.enemyAtk = enemy.getAtk();
         this.playerAtk = player.getAtk();
+        this.playerItemDef = player.getDefItem();
+        this.playerItemOff = player.getoffItem();
 
         while (enemyHp > 0 && playerHp > 0) {
-            if (enemyHp > 0) {
-                enemyHp = enemyHp - playerAtk;
-                enemy.setHp(enemyHp);
-                if (enemyHp > 0) {
-                    playerHp = playerHp - enemyAtk;
-                    player.setHp(playerHp);
-                }
+            enemyHp = enemyHp - (playerAtk + playerItemOff);
+            enemy.setHp(enemyHp);
+            if (enemyHp > 0 && enemyAtk > playerItemDef) {
+                playerHp = (playerHp - enemyAtk) + playerItemDef;
+                player.setHp(playerHp);
             }
         }
         if (playerHp < 0) {

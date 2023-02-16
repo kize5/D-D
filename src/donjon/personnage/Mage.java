@@ -1,6 +1,8 @@
 package donjon.personnage;
 
 import donjon.equipement.Item;
+import donjon.equipement.itemDef.Barriere;
+import donjon.equipement.itemDef.Bouclier;
 import donjon.equipement.itemOff.Sort;
 
 /**
@@ -24,8 +26,15 @@ public class Mage extends Personnage{
     }
 
     @Override
-    public boolean isUsableEquipement(Item item) {
+    public boolean isUsableEquipementOff(Item item) {
         if (item instanceof Sort) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isUsableEquipementDeff(Item item) {
+        if (item instanceof Barriere) {
             return true;
         }
         return false;

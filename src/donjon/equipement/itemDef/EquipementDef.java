@@ -9,10 +9,6 @@ abstract public class EquipementDef extends Item {
     int levelDef;
 
     /**
-     *
-     */
-
-    /**
      * Construct for all defensive equipment
      * @param type Type of defensive equipment
      * @param nom Name of defensive equipment

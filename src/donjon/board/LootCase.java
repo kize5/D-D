@@ -1,5 +1,6 @@
 package donjon.board;
 
+import donjon.equipement.itemDef.Barriere;
 import donjon.equipement.itemDef.Bouclier;
 import donjon.equipement.itemDef.EquipementDef;
 import donjon.equipement.itemDef.KindItemDef;
@@ -40,7 +41,7 @@ public class LootCase implements Case {
                 lootOff = new Epee(KindItemOff.Sword, "lépékipique", 2);
                 slowPrint(drawEpekipique(), 3);
                 slowPrint("Wow tu viens de trouver lépékipique, attention, ça pique ...  \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
@@ -48,7 +49,7 @@ public class LootCase implements Case {
                 lootOff = new Epee(KindItemOff.Sword, "warglaives", 5);
                 slowPrint(drawWarglaive(), 3);
                 slowPrint("Tu viens de loot les warglaives ! Ils ne sont pas prêts ! \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
@@ -56,7 +57,7 @@ public class LootCase implements Case {
                 lootOff = new Sort(KindItemOff.Spell, "fire ball", 5);
                 slowPrint(drawFireBall(), 3);
                 slowPrint("Tu viens d'apprendre la fameuse boule de feu ! Attention à l'aoe \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
@@ -64,23 +65,23 @@ public class LootCase implements Case {
                 lootOff = new Sort(KindItemOff.Spell, "lightning blot", 3);
                 slowPrint(drawLightningBlot(), 3);
                 slowPrint("Tu viens de trouver le sort éclair, pas mal ça  \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
             case 6 -> {
-                lootDeff = new Bouclier(KindItemDef.Bouclier, "rempart d'azzinoth", 6);
+                lootDeff = new Bouclier(KindItemDef.Bouclier, "rempart d'azzinoth", 2);
                 slowPrint(drawShield(), 3);
                 slowPrint("Tu viens de trouver le rempart d'azzinoth ! Bas ça c'est du solide ! \n", 30);
-                if (player.isUsableEquipement(lootDeff)) {
+                if (player.isUsableEquipementDeff(lootDeff)) {
                     checkIfBetterDef();
                 } else notForYou();
             }
             case 7 -> {
-                lootDeff = new Bouclier(KindItemDef.IceBarrier, "Ice barrier", 3);
+                lootDeff = new Barriere(KindItemDef.IceBarrier, "Ice barrier", 1);
                 slowPrint(drawIceShield(), 3);
                 slowPrint("Oh tu viens d'apprendre à faire une solide barrière de glace pour te protéger \n", 30);
-                if (player.isUsableEquipement(lootDeff)) {
+                if (player.isUsableEquipementDeff(lootDeff)) {
                     checkIfBetterDef();
                 } else notForYou();
             }
@@ -111,7 +112,7 @@ public class LootCase implements Case {
                 lootOff = new Epee(KindItemOff.Sword, "lépékipique", 4);
                 slowPrint(drawEpekipique(), 3);
                 slowPrint("Wow tu viens de trouver lépékipique, attention, ça pique ...  \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
@@ -119,7 +120,7 @@ public class LootCase implements Case {
                 lootOff = new Epee(KindItemOff.Sword, "warglaives", 7);
                 slowPrint(drawWarglaive(), 3);
                 slowPrint("Tu viens de loot les warglaives ! Ils ne sont pas prêts ! \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
@@ -127,7 +128,7 @@ public class LootCase implements Case {
                 lootOff = new Sort(KindItemOff.Spell, "fire ball", 7);
                 slowPrint(drawFireBall(), 3);
                 slowPrint("Tu viens d'apprendre la fameuse boule de feu ! Attention à l'aoe \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
@@ -135,23 +136,23 @@ public class LootCase implements Case {
                 lootOff = new Sort(KindItemOff.Spell, "lightning blot", 5);
                 slowPrint(drawLightningBlot(), 3);
                 slowPrint("Tu viens de trouver le sort éclair, pas mal ça  \n", 30);
-                if (player.isUsableEquipement(lootOff)) {
+                if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
             case 6 -> {
-                lootDeff = new Bouclier(KindItemDef.Bouclier, "rempart d'azzinoth", 8);
+                lootDeff = new Bouclier(KindItemDef.Bouclier, "rempart d'azzinoth", 2);
                 slowPrint(drawShield(), 3);
                 slowPrint("Tu viens de trouver le rempart d'azzinoth ! Bas ça c'est du solide ! \n", 30);
-                if (player.isUsableEquipement(lootDeff)) {
+                if (player.isUsableEquipementDeff(lootDeff)) {
                     checkIfBetterDef();
                 } else notForYou();
             }
             case 7 -> {
-                lootDeff = new Bouclier(KindItemDef.IceBarrier, "Ice barrier", 5);
+                lootDeff = new Barriere(KindItemDef.IceBarrier, "Ice barrier", 2);
                 slowPrint(drawIceShield(), 3);
                 slowPrint("Oh tu viens d'apprendre à faire une solide barrière de glace pour te protéger \n", 30);
-                if (player.isUsableEquipement(lootDeff)) {
+                if (player.isUsableEquipementDeff(lootDeff)) {
                     checkIfBetterDef();
                 } else notForYou();
             }

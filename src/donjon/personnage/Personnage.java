@@ -78,7 +78,8 @@ abstract public class Personnage {
         this.defItem = defItem;
     }
 
-    public abstract boolean isUsableEquipement(Item item);
+    public abstract boolean isUsableEquipementOff(Item item);
+    public abstract boolean isUsableEquipementDeff(Item item);
 
     public boolean isAlive() {
         return isAlive;

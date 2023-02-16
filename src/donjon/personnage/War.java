@@ -1,5 +1,6 @@
 package donjon.personnage;
 
+import donjon.equipement.itemDef.Bouclier;
 import donjon.equipement.itemOff.Arme;
 import donjon.equipement.Item;
 
@@ -20,8 +21,14 @@ public class War extends Personnage{
     }
 
     @Override
-    public boolean isUsableEquipement(Item item) {
+    public boolean isUsableEquipementOff(Item item) {
         if (item instanceof Arme) {
+            return true;
+        }
+        return false;
+    }
+    public boolean isUsableEquipementDeff(Item item) {
+        if (item instanceof Bouclier) {
             return true;
         }
         return false;
