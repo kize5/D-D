@@ -2,7 +2,7 @@ package donjon;
 
 import donjon.ennemi.Ennemi;
 import donjon.personnage.Personnage;
-
+import static donjon.WaitSecAndASCII.slowPrint;
 public class Fight {
 
     int playerHp;
@@ -22,9 +22,11 @@ public class Fight {
 
         while (enemyHp > 0 && playerHp > 0) {
             enemyHp = enemyHp - (playerAtk + playerItemOff);
+            slowPrint("Tu frappes l'ennemi pour " + (playerAtk+playerItemOff) + ", il a maintenant " + enemyHp + " point de vie \n",30);
             enemy.setHp(enemyHp);
             if (enemyHp > 0 && enemyAtk > playerItemDef) {
                 playerHp = (playerHp - enemyAtk) + playerItemDef;
+                slowPrint("L'ennemi te frappe pour " + enemyAtk + ", tu es donc à " + playerHp + " point de vie \n",30);
                 player.setHp(playerHp);
             }
         }
