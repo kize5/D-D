@@ -5,6 +5,7 @@ public class Ennemi {
     private final String nom;
     private final KindEnnemi type;
     private int hp ,atk;
+    private boolean isAlive;
 
 
     /**
@@ -19,6 +20,7 @@ public class Ennemi {
         this.nom = nom;
         this.hp = hp;
         this.atk = atk;
+        this.isAlive = true;
     }
 
     public String getNom() {
@@ -36,4 +38,21 @@ public class Ennemi {
     public int getAtk() {
         return atk;
     }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
 }

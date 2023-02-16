@@ -1,14 +1,15 @@
 package donjon.personnage;
-import donjon.KindEnnemi;
+import donjon.equipement.Item;
 
 abstract public class Personnage {
 
     private final String nom;
-    private final KindEnnemi type;
+    private final KindClass type;
     private int hp;
     private final int atk;
     private int offItem;
     private int defItem;
+    private boolean isAlive;
 
     /**
      * Construct for set up a new personnage
@@ -17,16 +18,17 @@ abstract public class Personnage {
      * @param hp Health points
      * @param atk Attack points
      */
-    protected Personnage(String nom, KindEnnemi type, int hp, int atk) {
+    protected Personnage(String nom, KindClass type, int hp, int atk) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
         this.atk = atk;
         this.offItem = 0;
         this.defItem = 0;
+        this.isAlive = true;
     }
 
-    protected Personnage(String nom, KindEnnemi type, int hp, int atk, int offItem, int defItem) {
+    protected Personnage(String nom, KindClass type, int hp, int atk, int offItem, int defItem) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
@@ -38,7 +40,7 @@ abstract public class Personnage {
     public String getNom() {
         return nom;
     }
-    public KindEnnemi getType() {
+    public KindClass getType() {
         return type;
     }
     public int getHp() {
@@ -76,16 +78,27 @@ abstract public class Personnage {
         this.defItem = defItem;
     }
 
+    public abstract boolean isUsableEquipement(Item item);
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
     @Override
     public String toString() {
-        return "Personnage{" +
-                "nom='" + nom + '\'' +
-                ", type=" + type +
-                ", hp=" + hp +
-                ", atk=" + atk +
-                ", offItem=" + offItem +
-                ", defItem=" + defItem +
-                '}';
+        return "Ton personnage " +
+                nom +
+                " de type " + type +
+                " a " + hp +
+                " point de vie, " +
+                atk + " point d'attaque, " +
+                "un bonus offensif de " + offItem +
+                " et un bonus défensif de " + defItem +
+                " \n";
     }
 /*
     public void getNameClass(String name, String classe) {

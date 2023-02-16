@@ -1,12 +1,8 @@
 package donjon;
 
-import donjon.equipement.Arme;
-import donjon.equipement.KindItemOff;
-import donjon.personnage.Murloc;
+import donjon.board.Board;
 import donjon.personnage.Personnage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,40 +15,27 @@ import static donjon.WaitSecAndASCII.*;
 public class Game {
     private final int BoardCases;
     private final Scanner scanner;
-    private int PlayerPose;
+    private int playerPose;
     Personnage player;
-    private KindCase typeCase;
     private boolean running;
     private boolean playerAlive;
     public boolean leaveGame;
 
-    List<Case> myCaseList;
+    Board board;
 
     /**
      * init a new game
-      */
+     */
     public Game(Scanner scanner) {
         this.scanner = scanner;
         BoardCases = 64;
-        PlayerPose = 0;
+        playerPose = 0;
         leaveGame = false;
         running = false;
         playerAlive = false;
-        this.myCaseList = new ArrayList<>();
-        myCaseList.add(new EmptyCase());
-        myCaseList.add(new EnemiCase());
-        myCaseList.add(new LootCase());
-        myCaseList.add(new EmptyCase());
-        myCaseList.add(new EnemiCase());
-        myCaseList.add(new LootCase());
-
-//        myCaseList.add(KindCase.Ennemie);
-//        myCaseList.add(KindCase.Vide);
-//        myCaseList.add(KindCase.Loot);
-//        myCaseList.add(KindCase.Ennemie);
-//        myCaseList.add(KindCase.Vide);
-//        System.out.println(myCaseList.get(1));
+        board = new Board();
     }
+
 
     /**
      * Set a new player
@@ -75,54 +58,39 @@ public class Game {
         //Player turn
         playerMove();
         //Win or lose ?
-        winOrRip();
+        if (player.isAlive()) {
+            win();
+        }
     }
 
     /**
      * Allow payer to move on board by using rollDice() method
      */
     private void playerMove() {
-        while (PlayerPose != BoardCases && PlayerPose < 64) {
-            rollDice();
-            checkCase();
-            justwaitASec(250);
-            slowPrint(PlayerPose + " / " + BoardCases + " \n", 30);
-        }
-        try {
-            if (PlayerPose > 64) {
-                throw new IllegalStateException("Player position cannot be greater than 64");
+        while (playerPose != BoardCases && playerPose < 64) {
+            if (player.isAlive()) {
+                rollDice();
+                checkCase();
+                justwaitASec(250);
+                slowPrint(playerPose + " / " + BoardCases + " \n", 30);
+            } else {slowPrint(drawRip(),3);
+                    slowPrint("Ha bas c'est con, t'es mort par terre ...", 30);
+                    return;
             }
         }
-        catch(Exception e) {slowPrint(e + " : Huge bug btw", 30);
+        try {
+            if (playerPose > 64) {
+                throw new IllegalStateException("Player position cannot be greater than 64");
+            }
+        } catch (Exception e) {
+            slowPrint(e + " : Huge bug btw", 30);
         }
     }
 
     public void checkCase() {
-        System.out.println("check case implement");
-        myCaseList.get(PlayerPose).apply(player);
-//        if ( == KindCase.Loot) {
-//            new LootCase(player);
-//        }
-//        if (myCaseList.get(PlayerPose) == KindCase.Ennemie) {
-//            new EnemiCase(player);
-//        }
-//        if (myCaseList.get(PlayerPose) == KindCase.Vide) {
-//            new EmptyCase();
-//        }
-
-//        switch (typeCase) {
-//            case Loot -> new LootCase(player);
-//            case Ennemie -> System.out.println("enemy");
-//            case Vide -> System.out.println("safe");
-//        }
+        board.leBoard.get(playerPose).apply(player, playerPose);
     }
 
-    private void fight() {
-    }
-    private void loot() {
-    }
-    private void safe() {
-    }
 
     /**
      * Roll the dice to make player move
@@ -131,16 +99,16 @@ public class Game {
 //        Random r = new Random();
 //        int random = r.nextInt((6 - 1) + 1) + 1;
         int randomNum = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        PlayerPose += 1;
-        if (PlayerPose >= 64) {
-            PlayerPose = 64;
+        playerPose += 1;
+        if (playerPose >= 64) {
+            playerPose = 64;
         }
     }
 
     /**
      * Output for victory or defeat
-      */
-    private void winOrRip() {
+     */
+    private void win() {
         justwaitASec(300);
         slowPrint(drawGG(), 3);
         justwaitASec(500);
@@ -165,14 +133,13 @@ public class Game {
             slowPrint("Tu avances et passe la massive porte de bois, rien, juste un grand hall, personne n'est là, c'est bon signe ça ? \n", 30);
             justwaitASec(2000);
             slowPrint("Mais tu es un aventurier, c'est un donjon, alors en route ! Tu avances dans la pièce sombre devant toi. \n", 30);
-        }
-        else  {
+        } else {
             justwaitASec(1000);
             slowPrint("Tu te faufiles sur le côté du donjon, et trouve une petite ouverture, tu t'y glisses, il fait noir, tu rampes dans une matière inconnue, mais ça sent mauvais, très mauvais, c'est sûrement les égouts du donjon ... \n", 30);
             justwaitASec(3000);
             slowPrint("Après un petit temps, tu sors enfin dans une petite pièce, ouvre la porte de cette dernière, qui donne sur ... le hall d'entré, dont la porte est toujours ouverte pour toi visiblement. \n", 30);
             justwaitASec(3000);
-            slowPrint("Tu sens franchement mauvais, mais tu es un aventurier, c'est un donjon, alors en route ! Tu avances dans la pièce sombre devant toi. \n", 30);
-            }
+            slowPrint("Tu sens franchement mauvais, mais tu es un aventurier, c'est un donjon, alors en route ! Tu avances dans la pièce face à toi. \n", 30);
+        }
     }
 }

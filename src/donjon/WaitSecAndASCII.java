@@ -128,13 +128,47 @@ public class WaitSecAndASCII {
                          )_/ /|\\   /|\\ \\_( \n
                 """;
     }
-    public static String drawSword() {
+    public static String drawEpekipique() {
         return """
                               />
                              / <
                 O[\\\\\\\\\\\\\\\\\\(O):::<=============================================-
                              \\ <
                               \\> \n
+                """;
+    }
+    public static String drawWarglaive() {
+        return """
+                        )        \s
+                          (           \s
+                        '    }     \s
+                      (    '     \s
+                     '      (  \s
+                      )  |    )\s
+                    '   /|\\    `
+                   )   / | \\  ` )  \s
+                  {    | | |  {  \s
+                 }     | | |  .
+                  '    | | |    )
+                 (    /| | |\\    .
+                  .  / | | | \\  (
+                }    \\ \\ | / /  .       \s
+                 (    \\ `-' /    }
+                 '    / ,-. \\    '\s
+                  }  / / | \\ \\  }
+                 '   \\ | | | /   }\s
+                  (   \\| | |/  (
+                    )  | | |  )
+                    .  | | |  '
+                       J | L
+                 /|    J_|_L    |\\
+                 \\ \\___/ o \\___/ /
+                  \\_____ _ _____/
+                        |-|
+                        |-|
+                        |-|
+                   hs  ,'-'.
+                       '---' \n
                 """;
     }
     public static String drawLightningBlot() {
@@ -204,7 +238,7 @@ public class WaitSecAndASCII {
                 :,' `-.' `:
                 |         |
                 :  Medium ;
-                 \\      /
+                 \\       /
                   `.___.' \n
                 """;
     }
@@ -248,11 +282,11 @@ public class WaitSecAndASCII {
                    |    ||    |
                    |___o()o___|
                    |__((<>))__|
-                  \\   o\\/o   /
-                   \\   ||   /
-                    \\  ||  /
-                      '.||.'
-                        `` \n
+                   \\   o\\/o   /
+                    \\   ||   /
+                     \\  ||  /
+                       '.||.'
+                         `` \n
                 """;
     }
     public static String drawIceShield() {
@@ -345,7 +379,7 @@ public class WaitSecAndASCII {
                      / /).:.('--._)
                     {_[ (_,_)
                         | Y |
-                snd    /  |  \\
+                       /  |  \\
                        ""\" ""\" \n
                                               """;
     }
@@ -363,7 +397,7 @@ public class WaitSecAndASCII {
                      \\/--v}  I     o   .
                      |    |  I   _________
                      |    |  I c(`       ')o
-                     |    l  I   \\.     ,/      -Row
+                     |    l  I   \\.     ,/
                    _/j  L l\\_!  _//^---^\\\\_
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n
                                               """;

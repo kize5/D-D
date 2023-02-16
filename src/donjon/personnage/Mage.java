@@ -1,6 +1,7 @@
 package donjon.personnage;
 
-import donjon.KindEnnemi;
+import donjon.equipement.Item;
+import donjon.equipement.itemOff.Sort;
 
 /**
  * Class to create a new mage
@@ -18,8 +19,16 @@ public class Mage extends Personnage{
      * @param hp Heal points of new mage
      * @param atk Attack points of new mage
      */
-    public Mage(String nom, KindEnnemi type, int hp, int atk) {
+    public Mage(String nom, KindClass type, int hp, int atk) {
         super(nom, type, hp, atk);
+    }
+
+    @Override
+    public boolean isUsableEquipement(Item item) {
+        if (item instanceof Sort) {
+            return true;
+        }
+        return false;
     }
 }
 

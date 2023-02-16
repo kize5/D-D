@@ -1,9 +1,7 @@
 package donjon;
 
-import donjon.personnage.Mage;
-import donjon.personnage.Murloc;
-import donjon.personnage.Personnage;
-import donjon.personnage.War;
+import donjon.personnage.*;
+
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,26 +28,26 @@ public class Menu {
     /**
      * Choose hero class
      */
-    private KindEnnemi inputClass() {
+    private KindClass inputClass() {
         slowPrint("As tu envie de jouer 'Mage' ou 'War' ? \n", 30);
         String input = scanner.nextLine();// Read user input
         if (Objects.equals(input, "war") || Objects.equals(input, "War")) {
             justwaitASec(500);
             slowPrint(drawWarrior(), 3);
             slowPrint("Oh tiens, un " + input + " ça faisait longtemps ! \n", 30);  // Output user input
-            return KindEnnemi.War;
+            return KindClass.War;
         } else if (Objects.equals(input, "mage") || Objects.equals(input, "Mage")) {
             justwaitASec(500);
             slowPrint(drawMage(), 3);
             slowPrint("Oh tiens, un " + input + " ça faisait longtemps ! \n", 30);  // Output user input
-            return KindEnnemi.Mage;
+            return KindClass.Mage;
         } else if (Objects.equals(input, "exit")) {
             leave();
         }
         justwaitASec(500);
         slowPrint(drawMurloc(), 3);
         slowPrint("Ha ! Tu ne sais pas écrire mage ou war ... Tu dois donc être un murloc \n", 30);  // Output user input
-        return KindEnnemi.Murloc;
+        return KindClass.Murloc;
     }
 
     /**
@@ -94,21 +92,21 @@ public class Menu {
      */
     private void createPersonnage() {
         String name = this.inputName();
-        KindEnnemi pClass = this.inputClass();
+        KindClass pClass = this.inputClass();
         //random method for class and hp here
         int hp = generateRandomHP(pClass);
         int atk = generateRandomAtk(pClass);
         Personnage newP = chooseClass(pClass, name, hp, atk);
         welcomeNewHero(newP);
-//        if (pClass == donjon.KindClass.donjon.personnage.Mage ) {
+//        if (pClass == donjon.personnage.KindClass.donjon.personnage.Mage ) {
 //            donjon.personnage.Mage newP = new donjon.personnage.Mage(name, pClass);
 //            welcomeNewHero(newP);
 //        }
-//        if (pClass == donjon.KindClass.donjon.personnage.War ) {
+//        if (pClass == donjon.personnage.KindClass.donjon.personnage.War ) {
 //            donjon.personnage.War newP = new donjon.personnage.War(name, pClass);
 //            welcomeNewHero(newP);
 //        }
-//        if (pClass == donjon.KindClass.donjon.personnage.Murloc ) {
+//        if (pClass == donjon.personnage.KindClass.donjon.personnage.Murloc ) {
 //            donjon.personnage.Murloc newP = new donjon.personnage.Murloc(name, pClass);
 //            welcomeNewHero(newP);
 //        }
@@ -120,11 +118,11 @@ public class Menu {
      * Create hero by class
      */
 
-    private Personnage chooseClass(KindEnnemi pClass, String name, int hp, int atk) {
-        if (pClass == KindEnnemi.Mage) {
+    private Personnage chooseClass(KindClass pClass, String name, int hp, int atk) {
+        if (pClass == KindClass.Mage) {
             return new Mage(name, pClass, hp, atk);
         }
-        if (pClass == KindEnnemi.War) {
+        if (pClass == KindClass.War) {
             return new War(name, pClass, hp, atk);
         }
         return new Murloc(name, pClass, hp, atk);
@@ -158,7 +156,7 @@ public class Menu {
      */
     private void modifyPersonnage() {
         String name = this.inputName();
-        KindEnnemi pClass = this.inputClass();
+        KindClass pClass = this.inputClass();
         slowPrint("Combien de hp veux tu ? : \n", 30);
         int health = Integer.parseInt(scanner.nextLine());
         slowPrint("A combien s'élève ton attaque ? : \n", 30);
@@ -167,21 +165,21 @@ public class Menu {
         welcomeNewHero(newPmod);
     }
 
-    private int generateRandomHP(KindEnnemi pClass) {
-        if (pClass == KindEnnemi.Mage) {
+    private int generateRandomHP(KindClass pClass) {
+        if (pClass == KindClass.Mage) {
             return ThreadLocalRandom.current().nextInt(6 + 1 - 3) + 3;
         }
-        if (pClass == KindEnnemi.War) {
+        if (pClass == KindClass.War) {
             return ThreadLocalRandom.current().nextInt(10 + 1 - 5) + 5;
         }
         return 1;
     }
 
-    private int generateRandomAtk(KindEnnemi pClass) {
-        if (pClass == KindEnnemi.Mage) {
+    private int generateRandomAtk(KindClass pClass) {
+        if (pClass == KindClass.Mage) {
             return ThreadLocalRandom.current().nextInt(15 + 1 - 8) + 8;
         }
-        if (pClass == KindEnnemi.War) {
+        if (pClass == KindClass.War) {
             return ThreadLocalRandom.current().nextInt(10 + 1 - 5) + 5;
         }
         return 1;
