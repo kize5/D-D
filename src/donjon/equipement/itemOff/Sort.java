@@ -1,6 +1,8 @@
 package donjon.equipement.itemOff;
 
-public class Sort extends EquipementOff{
+import donjon.ennemi.Ennemi;
+
+abstract public class Sort extends EquipementOff{
     int atk;
     public Sort(KindItemOff type, String nom, int atk) {
         super(type, nom, atk);

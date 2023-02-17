@@ -54,17 +54,25 @@ public class LootCase implements Case {
                 } else notForYou();
             }
             case 3 -> {
-                lootOff = new Sort(KindItemOff.Spell, "fire ball", 5);
+                lootOff = new FireBall(KindItemOff.Spell, "fire ball", 5);
                 slowPrint(drawFireBall(), 3);
                 slowPrint("Tu viens d'apprendre la fameuse boule de feu ! Attention à l'aoe \n", 30);
                 if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
-            case 4, 5 -> {
-                lootOff = new Sort(KindItemOff.Spell, "lightning blot", 3);
+            case 4 -> {
+                lootOff = new FrostBolt(KindItemOff.Spell, "frost bolt", 3);
                 slowPrint(drawLightningBlot(), 3);
-                slowPrint("Tu viens de trouver le sort éclair, pas mal ça  \n", 30);
+                slowPrint("Tu viens de trouver un sort de givre, pas mal ça, tu vas les geler sur place !  \n", 30);
+                if (player.isUsableEquipementOff(lootOff)) {
+                    checkIfBetterOff();
+                } else notForYou();
+            }
+            case 5 -> {
+                lootOff = new ArcaneBlast(KindItemOff.Spell, "arcane blast", 5);
+                slowPrint(drawArcaneBlast(), 3);
+                slowPrint("Oooh l'arcane blast, tu vas pouvoir frapper tes ennemies avec la magie arcanique !  \n", 30);
                 if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
@@ -125,17 +133,25 @@ public class LootCase implements Case {
                 } else notForYou();
             }
             case 3 -> {
-                lootOff = new Sort(KindItemOff.Spell, "fire ball", 7);
+                lootOff = new FireBall(KindItemOff.Spell, "fire ball", 7);
                 slowPrint(drawFireBall(), 3);
                 slowPrint("Tu viens d'apprendre la fameuse boule de feu ! Attention à l'aoe \n", 30);
                 if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
             }
-            case 4, 5 -> {
-                lootOff = new Sort(KindItemOff.Spell, "lightning blot", 5);
+            case 4 -> {
+                lootOff = new FrostBolt(KindItemOff.Spell, "forst bolt", 4);
                 slowPrint(drawLightningBlot(), 3);
-                slowPrint("Tu viens de trouver le sort éclair, pas mal ça  \n", 30);
+                slowPrint("Tu viens de trouver un sort de givre, pas mal ça, tu vas les geler sur place !  \n", 30);
+                if (player.isUsableEquipementOff(lootOff)) {
+                    checkIfBetterOff();
+                } else notForYou();
+            }
+            case 5 -> {
+                lootOff = new ArcaneBlast(KindItemOff.Spell, "arcane blast", 6);
+                slowPrint(drawArcaneBlast(), 3);
+                slowPrint("Oooh l'arcane blast, tu vas pouvoir frapper tes ennemies avec la magie arcanique !  \n", 30);
                 if (player.isUsableEquipementOff(lootOff)) {
                     checkIfBetterOff();
                 } else notForYou();
@@ -178,14 +194,14 @@ public class LootCase implements Case {
     }
 
     private void checkIfBetterOff() {
-        if (lootOff.getPtsAtk() > player.getoffItem()) {
-            player.setoffItem((lootOff.getPtsAtk()));
+        if (lootOff.getPtsAtk() > player.getoffItem().getPtsAtk()) {
+            player.setoffItem((lootOff));
         } else slowPrint("Mais tu as déjà mieux d'équipé pour tapper, pas grave tu pourras revendre ça à l'hv \n", 30);
     }
 
     private void checkIfBetterDef() {
-        if (lootDeff.getLevelDef() > player.getDefItem()) {
-            player.setDefItem((lootDeff.getLevelDef()));
+        if (lootDeff.getLevelDef() > player.getDefItem().getLevelDef()) {
+            player.setDefItem((lootDeff));
         } else
             slowPrint("Mais tu as déjà mieux d'équipé pour te défendre, pas grave tu pourras revendre ça à l'hv \n", 30);
     }
@@ -206,8 +222,10 @@ public class LootCase implements Case {
             case 2 ->
                     slowPrint("En arrivant la pièce, une créature difforme t'aperçois et prend rapidement la fuite, laissant un objet derrière elle \n", 30);
             case 3 -> {
-                slowPrint("Au centre de la pièce, un bruit attire ton attention, sur les hauteurs, une chose ressemblant plus ou moins à un gobelin te regarde, et d'un coup il te jete un truc que tu évites, suivie d'un bruit de coup sur l'arrière de la tête ...  \n", 30);
+                slowPrint("Au centre de la pièce, un bruit attire ton attention, sur les hauteurs, une chose ressemblant plus ou moins à un gobelin te regarde... \n", 30);
+                slowPrint("Et d'un coup il te jete un objet que tu évites de justesse, suivie d'un bruit de coup sur l'arrière de la tête ... \n", 30);
                 slowPrint("'Mais pourquoi tu lui as jeté ça abruti !' \n", 30);
+                slowPrint("'Bas je voulais l'assommer ou je sais pas moi ...' \n", 30);
                 slowPrint("'Avec ça !? Le patron va te tuer !' \n", 30);
             }
             case 4 ->

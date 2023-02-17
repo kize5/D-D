@@ -1,5 +1,5 @@
 package donjon.ennemi;
 
 public enum KindEnnemi {
-    Wizard, Gobelin, Dragon
+    Wizard, Gobelin, Dragon, Orc, Spectre
 }

@@ -1,8 +1,7 @@
 package donjon.board;
 
 import donjon.Fight;
-import donjon.ennemi.Ennemi;
-import donjon.ennemi.KindEnnemi;
+import donjon.ennemi.*;
 import donjon.personnage.Personnage;
 
 import java.util.Random;
@@ -23,7 +22,7 @@ public class EnemiCase implements Case {
         randomLine();
         setRng();
         generateEnemy();
-        new Fight(player, ennemi);
+        new Fight(player, ennemi, playerPose);
         slowPrint("Après ce combat : \n",30);
         slowPrint(player.toString(), 30);
     }
@@ -34,22 +33,31 @@ public class EnemiCase implements Case {
                 case 0 -> spawnGobelin();
                 case 1 -> spawnMage();
                 case 2 -> spawnDragon();
+                case 3 -> spawnSpectre();
+                case 4 -> spawnOrc();
             }
         } else if (playerposition < 62) {
             switch (rng) {
                 case 0, 1 -> spawnMage();
                 case 2 -> spawnDragon();
+                case 3 -> spawnOrc();
+                case 4 -> spawnSpectre();
             }
         }
-        else {
-            ennemi = new Ennemi(KindEnnemi.Dragon, "Dragon blanc aux yeux bleus", 16, 5);
+        else if (playerposition < 64) {
+            ennemi = new Dragon(KindEnnemi.Dragon, "Dragon blanc aux yeux bleus", 16, 5);
             slowPrint(drawDragon(), 3);
             slowPrint("Un grognement sourd raisonne dans la salle, une ombre massive s'avance dans un rugissement, te voilà face à un terrible dragon blanc aux yeux bleus ! \n", 30);
+        } else if (playerposition == 64) {
+            ennemi = new Dragon(KindEnnemi.Dragon, "Deathwing, ", 20, 6);
+            slowPrint(drawDragon(), 3);
+            slowPrint("Deathwing est face à vous ! \n", 30);
+            slowPrint("'Bientôt votre monde brulera tout entier à l'ombre de mes ailes !' \n", 30);
         }
     }
 
     public void setRng() {
-        rng = ThreadLocalRandom.current().nextInt(0, 3);
+        rng = ThreadLocalRandom.current().nextInt(0, 5);
     }
     private void randomLine() {
         Random random = new Random();
@@ -66,18 +74,28 @@ public class EnemiCase implements Case {
         }
     }
     private void spawnGobelin() {
-        ennemi = new Ennemi(KindEnnemi.Gobelin, "kobold", 6, 1);
+        ennemi = new Gobelin();
         slowPrint(drawGobelin(), 3);
         slowPrint("Une lumière dans l'obscurité, une pioche.. Oh non un vieux kobold moche t'attaque ! \n", 30);
     }
     private void spawnMage() {
-        ennemi = new Ennemi(KindEnnemi.Wizard, "mage noir", 9, 3);
+        ennemi = new MageBad();
         slowPrint(drawBadWizard(), 3);
         slowPrint("L'air est plus lourd, une silhouette encapuchonné apparait depuis les ombres toi, un mage, un mage noir même ...  \n", 30);
     }
     private void spawnDragon() {
-        ennemi = new Ennemi(KindEnnemi.Dragon, "Dragon noir aux yeux rouges", 15, 4);
+        ennemi = new Dragon();
         slowPrint(drawDragon(), 3);
         slowPrint("Un grognement sourd raisonne dans la salle, une ombre massive s'avance dans un rugissement, te voilà face à un terrible dragon noir aux yeux rouges ! \n", 30);
+    }
+    private void spawnOrc() {
+        ennemi = new Orc();
+        slowPrint(drawOrc(), 3);
+        slowPrint("soon \n", 30);
+    }
+    private void spawnSpectre() {
+        ennemi = new Spectre();
+        slowPrint(drawSpectre(), 3);
+        slowPrint("soon \n", 30);
     }
 }

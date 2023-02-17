@@ -1,5 +1,8 @@
 package donjon;
 
+import donjon.equipement.itemDef.DefaultDef;
+import donjon.equipement.itemOff.ArcaneBlast;
+import donjon.equipement.itemOff.DefaultOff;
 import donjon.personnage.*;
 
 import java.util.Objects;
@@ -120,12 +123,12 @@ public class Menu {
 
     private Personnage chooseClass(KindClass pClass, String name, int hp, int atk) {
         if (pClass == KindClass.Mage) {
-            return new Mage(name, pClass, hp, atk);
+            return new Mage(name, pClass, hp, atk, new ArcaneBlast(), new DefaultDef());
         }
         if (pClass == KindClass.War) {
-            return new War(name, pClass, hp, atk);
+            return new War(name, pClass, hp, atk, new DefaultOff(), new DefaultDef());
         }
-        return new Murloc(name, pClass, hp, atk);
+        return new Murloc(name, pClass, hp, atk, new DefaultOff(), new DefaultDef());
     }
 
 

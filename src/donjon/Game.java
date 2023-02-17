@@ -15,7 +15,8 @@ import static donjon.WaitSecAndASCII.*;
 public class Game {
     private final int BoardCases;
     private final Scanner scanner;
-    private int playerPose;
+
+    public static int playerPose;
     Personnage player;
     private boolean running;
     private boolean playerAlive;
@@ -69,10 +70,13 @@ public class Game {
     private void playerMove() {
         while (playerPose != BoardCases && playerPose < 64) {
             if (player.isAlive()) {
-                rollDice();
-                checkCase();
+                slowPrint("Appuie sur 'entrer' pour lancer les dés \n", 20);
+                String go = scanner.nextLine(); // Read user input
+                if (Objects.equals(go, "")) {
+                    rollDice();
+                    checkCase();
+                }
                 justwaitASec(250);
-                slowPrint(playerPose + " / " + BoardCases + " \n", 30);
             } else {slowPrint(drawRip(),3);
                     slowPrint("Ha bas c'est con, t'es mort par terre ...", 30);
                     return;
@@ -99,9 +103,14 @@ public class Game {
 //        Random r = new Random();
 //        int random = r.nextInt((6 - 1) + 1) + 1;
         int randomNum = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        playerPose += 1;
+        slowPrint("Tu as fait un " + randomNum + " \n",20);
+        playerPose += randomNum;
+        if (playerPose < 64) {
+            slowPrint("Tu es dans la salle " + playerPose + " sur les " + BoardCases + " de ce donjon \n", 30);
+        }
         if (playerPose >= 64) {
             playerPose = 64;
+            slowPrint("Tu as cru pouvoir quitter ce donjon sans combattre le boss ? *rire diabolique* Jamais ! \n",30);
         }
     }
 
@@ -141,5 +150,13 @@ public class Game {
             justwaitASec(3000);
             slowPrint("Tu sens franchement mauvais, mais tu es un aventurier, c'est un donjon, alors en route ! Tu avances dans la pièce face à toi. \n", 30);
         }
+    }
+
+    public int getPlayerPose() {
+        return playerPose;
+    }
+
+    public void setPlayerPose(int playerPose) {
+        this.playerPose = playerPose;
     }
 }

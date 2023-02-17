@@ -15,9 +15,9 @@ public class Board {
     private void generateBoard() {
         for (int i = 0; i < boardCases - 3; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(1, 100 + 1);
-            if (randomNum <= 70) {
+            if (randomNum <= 40) {
                 leBoard.add(new EmptyCase());
-            } else if (randomNum < 85) {
+            } else if (randomNum < 70) {
                 leBoard.add(new EnemiCase());
             } else leBoard.add(new LootCase());
         }

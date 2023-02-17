@@ -2,7 +2,8 @@ package donjon.personnage;
 
 import donjon.equipement.Item;
 import donjon.equipement.itemDef.Barriere;
-import donjon.equipement.itemDef.Bouclier;
+import donjon.equipement.itemDef.EquipementDef;
+import donjon.equipement.itemOff.EquipementOff;
 import donjon.equipement.itemOff.Sort;
 
 /**
@@ -21,8 +22,8 @@ public class Mage extends Personnage{
      * @param hp Heal points of new mage
      * @param atk Attack points of new mage
      */
-    public Mage(String nom, KindClass type, int hp, int atk) {
-        super(nom, type, hp, atk);
+    public Mage(String nom, KindClass type, int hp, int atk, EquipementOff off, EquipementDef def) {
+        super(nom, type, hp, atk, off, def);
     }
 
     @Override

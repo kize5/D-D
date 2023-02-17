@@ -1,6 +1,8 @@
 package donjon.ennemi;
 
-public class Ennemi {
+import donjon.personnage.Personnage;
+
+abstract public class Ennemi {
 
     private final String nom;
     private final KindEnnemi type;
@@ -55,4 +57,5 @@ public class Ennemi {
         isAlive = alive;
     }
 
+    abstract public boolean canHit(Personnage player);
 }

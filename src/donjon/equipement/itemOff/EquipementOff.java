@@ -1,5 +1,6 @@
 package donjon.equipement.itemOff;
 
+import donjon.ennemi.Ennemi;
 import donjon.equipement.Item;
 
 abstract public class EquipementOff extends Item {
@@ -16,7 +17,6 @@ abstract public class EquipementOff extends Item {
         this.nom = nom;
         this.ptsAtk = atk;
     }
-
 
 
     public KindItemOff getType() {
@@ -43,4 +43,14 @@ abstract public class EquipementOff extends Item {
         this.ptsAtk = ptsAtk;
     }
 
+   abstract public boolean damageBoost(Ennemi ennemi);
+
+    @Override
+    public String toString() {
+        return "EquipementOff{" +
+                "type=" + type +
+                ", nom='" + nom + '\'' +
+                ", ptsAtk=" + ptsAtk +
+                '}';
+    }
 }

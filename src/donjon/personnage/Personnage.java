@@ -1,5 +1,9 @@
 package donjon.personnage;
 import donjon.equipement.Item;
+import donjon.equipement.itemDef.EquipementDef;
+import donjon.equipement.itemOff.Epee;
+import donjon.equipement.itemOff.EquipementOff;
+import donjon.equipement.itemOff.KindItemOff;
 
 abstract public class Personnage {
 
@@ -7,8 +11,8 @@ abstract public class Personnage {
     private final KindClass type;
     private int hp;
     private final int atk;
-    private int offItem;
-    private int defItem;
+    private EquipementOff offItem;
+    private EquipementDef defItem;
     private boolean isAlive;
 
     /**
@@ -18,23 +22,24 @@ abstract public class Personnage {
      * @param hp Health points
      * @param atk Attack points
      */
-    protected Personnage(String nom, KindClass type, int hp, int atk) {
-        this.type = type;
-        this.nom = nom;
-        this.hp = hp;
-        this.atk = atk;
-        this.offItem = 0;
-        this.defItem = 0;
-        this.isAlive = true;
-    }
+//    protected Personnage(String nom, KindClass type, int hp, int atk) {
+//        this.type = type;
+//        this.nom = nom;
+//        this.hp = hp;
+//        this.atk = atk;
+//        this.offItem = null;
+//        this.defItem = null;
+//        this.isAlive = true;
+//    }
 
-    protected Personnage(String nom, KindClass type, int hp, int atk, int offItem, int defItem) {
+    protected Personnage(String nom, KindClass type, int hp, int atk, EquipementOff offItem, EquipementDef defItem) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
         this.atk = atk;
         this.defItem = defItem;
         this.offItem = offItem;
+        this.isAlive = true;
     }
 
     public String getNom() {
@@ -54,27 +59,19 @@ abstract public class Personnage {
         return atk;
     }
 
-    public void setoffItem (int newOffItem) {
+    public void setoffItem (EquipementOff newOffItem) {
         this.offItem = newOffItem;
     }
 
-    public int getoffItem (){
+    public EquipementOff getoffItem (){
         return offItem;
     }
 
-    public int getOffItem() {
-        return offItem;
-    }
-
-    public void setOffItem(int offItem) {
-        this.offItem = offItem;
-    }
-
-    public int getDefItem() {
+    public EquipementDef getDefItem() {
         return defItem;
     }
 
-    public void setDefItem(int defItem) {
+    public void setDefItem(EquipementDef defItem) {
         this.defItem = defItem;
     }
 
@@ -97,8 +94,8 @@ abstract public class Personnage {
                 " a " + hp +
                 " point de vie, " +
                 atk + " point d'attaque, " +
-                "un bonus offensif de " + offItem +
-                " et un bonus défensif de " + defItem +
+                "un bonus offensif de " + offItem.getPtsAtk() +
+                " et un bonus défensif de " + defItem.getLevelDef() +
                 " \n";
     }
 /*

@@ -1,6 +1,6 @@
 package donjon.equipement.itemOff;
 
-public class Arme extends EquipementOff{
+abstract public class Arme extends EquipementOff{
 
 
     public Arme(KindItemOff type, String nom, int atk) {
