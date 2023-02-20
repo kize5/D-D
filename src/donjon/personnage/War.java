@@ -21,6 +21,9 @@ public class War extends Personnage{
     public War(String nom, KindClass type, int hp, int atk, EquipementOff off, EquipementDef def) {
         super(nom, type, hp, atk, off, def);
     }
+    public War(String nom, KindClass type, int hp, int atk) {
+        super(nom, type, hp, atk);
+    }
 
     @Override
     public boolean isUsableEquipementOff(Item item) {

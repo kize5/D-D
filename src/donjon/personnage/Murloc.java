@@ -18,6 +18,9 @@ public class Murloc extends Personnage {
     public Murloc(String nom, KindClass type, int hp, int atk, EquipementOff off, EquipementDef def) {
         super(nom, type, hp, atk, off, def);
     }
+    public Murloc(String nom, KindClass type, int hp, int atk) {
+        super(nom, type, hp, atk);
+    }
 
     @Override
     public boolean isUsableEquipementOff(Item item) {

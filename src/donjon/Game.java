@@ -92,7 +92,7 @@ public class Game {
     }
 
     public void checkCase() {
-        board.leBoard.get(playerPose).apply(player, playerPose);
+        board.leBoard.get(playerPose).apply(player, playerPose, scanner);
     }
 
 

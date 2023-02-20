@@ -26,6 +26,10 @@ public class Mage extends Personnage{
         super(nom, type, hp, atk, off, def);
     }
 
+    public Mage(String nom, KindClass type, int hp, int atk) {
+        super(nom, type, hp, atk);
+    }
+
     @Override
     public boolean isUsableEquipementOff(Item item) {
         if (item instanceof Sort) {

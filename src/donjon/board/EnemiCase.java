@@ -5,6 +5,7 @@ import donjon.ennemi.*;
 import donjon.personnage.Personnage;
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static donjon.WaitSecAndASCII.*;
@@ -17,7 +18,7 @@ public class EnemiCase implements Case {
     int playerposition;
 
     @Override
-    public void apply(Personnage player, int playerPose) {
+    public void apply(Personnage player, int playerPose, Scanner scanner) {
         playerposition = playerPose;
         randomLine();
         setRng();
@@ -91,11 +92,11 @@ public class EnemiCase implements Case {
     private void spawnOrc() {
         ennemi = new Orc();
         slowPrint(drawOrc(), 3);
-        slowPrint("soon \n", 30);
+        slowPrint("Une silhouette massive charge depuis les ombres en lançant un cri de guerre, 'lok'tar ogar'!! C'est un orc ! \n", 30);
     }
     private void spawnSpectre() {
         ennemi = new Spectre();
         slowPrint(drawSpectre(), 3);
-        slowPrint("soon \n", 30);
+        slowPrint("Une ombre translucide se fait de plus en plus claire devant vous, elle pousse un gémissement d'outre tombe.. saperlipopette ! C'est un Spectre attention !  \n", 30);
     }
 }

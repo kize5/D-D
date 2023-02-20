@@ -4,13 +4,14 @@ import donjon.personnage.Personnage;
 
 import static donjon.WaitSecAndASCII.slowPrint;
 
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EmptyCase implements Case {
 
 
     @Override
-    public void apply(Personnage player, int playerPose) {
+    public void apply(Personnage player, int playerPose, Scanner scanner) {
         randomLine();
     }
 

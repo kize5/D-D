@@ -47,10 +47,6 @@ abstract public class EquipementOff extends Item {
 
     @Override
     public String toString() {
-        return "EquipementOff{" +
-                "type=" + type +
-                ", nom='" + nom + '\'' +
-                ", ptsAtk=" + ptsAtk +
-                '}';
+        return nom + " qui te donne un bonus de " + ptsAtk;
     }
 }

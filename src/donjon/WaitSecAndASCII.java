@@ -189,6 +189,18 @@ public class WaitSecAndASCII {
                                               \\ \n
                 """;
     }
+    public static String drawFrostBlot() {
+        return """
+                     /\\
+                __   \\/   __
+                \\_\\_\\/\\/_/_/
+                  _\\_\\/_/_
+                 __/_/\\_\\__
+                /_/ /\\/\\ \\_\\
+                     /\\
+                     \\/ \n
+                """;
+    }
     public static String drawFireBall() {
         return """
 ⠀⠀⠀⠀⠀⠀⢠⣤⡄⠀⠀⠀⠀⠀⠀⠀⠠⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -439,5 +451,31 @@ public class WaitSecAndASCII {
                 (/   \\)
                 ,'/|\\'.⠀ \n
                                            """;
+    }
+    public static String drawBow() {
+        return """
+                   (
+                    \\
+                     )
+                ##-------->
+                     )
+                    /
+                   (⠀ \n
+                                           """;
+    }
+    public static String drawThunderPotion() {
+        return """
+                   ___
+                   )_(
+                   | |
+                 .-'-'-.
+                /-::_..-\\
+                )_     _(
+                |;::Z   | 
+                |;::Z   | 
+                |;::Z   |
+                |;::-.._|
+                `-.._..-'   \n
+                                       """;
     }
 }

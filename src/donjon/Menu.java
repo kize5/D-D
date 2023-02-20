@@ -1,8 +1,7 @@
 package donjon;
 
 import donjon.equipement.itemDef.DefaultDef;
-import donjon.equipement.itemOff.ArcaneBlast;
-import donjon.equipement.itemOff.DefaultOff;
+import donjon.equipement.itemOff.*;
 import donjon.personnage.*;
 
 import java.util.Objects;
@@ -20,8 +19,9 @@ public class Menu {
 
     /**
      * Constructor
+     *
      * @param scanner Take scanner from main
-     * @param game Take a new game instance from main
+     * @param game    Take a new game instance from main
      */
     public Menu(Scanner scanner, Game game) {
         this.scanner = scanner;
@@ -63,7 +63,7 @@ public class Menu {
             leave();
         }
         justwaitASec(500);
-        slowPrint("Ha oui ? Étrange comme nom ça " + "'" + nom + "'" + ", mais bon, tu n'as pas choisi, si ? ... (•_•\") \n" , 30);  // Output user input
+        slowPrint("Ha oui ? Étrange comme nom ça " + "'" + nom + "'" + ", mais bon, tu n'as pas choisi, si ? ... (•_•\") \n", 30);  // Output user input
         return nom;
     }
 
@@ -99,41 +99,57 @@ public class Menu {
         //random method for class and hp here
         int hp = generateRandomHP(pClass);
         int atk = generateRandomAtk(pClass);
-        Personnage newP = chooseClass(pClass, name, hp, atk);
-        welcomeNewHero(newP);
-//        if (pClass == donjon.personnage.KindClass.donjon.personnage.Mage ) {
-//            donjon.personnage.Mage newP = new donjon.personnage.Mage(name, pClass);
-//            welcomeNewHero(newP);
-//        }
-//        if (pClass == donjon.personnage.KindClass.donjon.personnage.War ) {
-//            donjon.personnage.War newP = new donjon.personnage.War(name, pClass);
-//            welcomeNewHero(newP);
-//        }
-//        if (pClass == donjon.personnage.KindClass.donjon.personnage.Murloc ) {
-//            donjon.personnage.Murloc newP = new donjon.personnage.Murloc(name, pClass);
-//            welcomeNewHero(newP);
-//        }
-//        donjon.personnage.Personnage newP = new donjon.personnage.Personnage(name, pClass);
-
+        slowPrint("Si voulez vous commencer la partie avec une arme équipé press 'a' sinon press 'b' (Plus équilibré sans) \n", 30);
+        String weaponOrNot = scanner.nextLine();
+        if (weaponOrNot.equalsIgnoreCase("a")) {
+            Personnage newP = chooseClasseWithWeapon(pClass, name, hp, atk);
+            welcomeNewHero(newP);
+        }
+        if (weaponOrNot.equalsIgnoreCase("b")) {
+            Personnage newP = chooseClass(pClass, name, hp, atk);
+            welcomeNewHero(newP);
+        }
     }
 
     /**
      * Create hero by class
      */
-
     private Personnage chooseClass(KindClass pClass, String name, int hp, int atk) {
+        String weaponOrNot = scanner.nextLine();
         if (pClass == KindClass.Mage) {
-            return new Mage(name, pClass, hp, atk, new ArcaneBlast(), new DefaultDef());
+            return new Mage(name, pClass, hp, atk);
         }
         if (pClass == KindClass.War) {
-            return new War(name, pClass, hp, atk, new DefaultOff(), new DefaultDef());
+            return new War(name, pClass, hp, atk);
         }
-        return new Murloc(name, pClass, hp, atk, new DefaultOff(), new DefaultDef());
+        return new Murloc(name, pClass, hp, atk);
+    }
+
+    private Personnage chooseClasseWithWeapon(KindClass pClass, String name, int hp, int atk) {
+        if (pClass == KindClass.Mage) {
+            slowPrint("Si tu veux commencer avec Frost bolt press 'a' ou avec Arcane blast press 'b', jeune tricheur ? \n", 30);
+            String spell = scanner.nextLine();
+            if (spell.equalsIgnoreCase("a")) {
+                return new Mage(name, pClass, hp, atk, new FrostBolt(KindItemOff.Spell, "Frost bolt", 3), new DefaultDef());
+            } else if (spell.equalsIgnoreCase("b")) {
+                return new Mage(name, pClass, hp, atk, new ArcaneBlast(KindItemOff.Spell, "Arcane blast", 4), new DefaultDef());
+            } else chooseClass(pClass, name, hp, atk);
+        }
+        if (pClass == KindClass.War) {
+            slowPrint("Si tu veux commencer avec Lépéquipik press 'a' ou avec les Wargalives press 'b', jeune tricheur ? \n", 30);
+            String sword = scanner.nextLine();
+            if (sword.equalsIgnoreCase("a")) {
+                return new War(name, pClass, hp, atk, new Epee(KindItemOff.Sword, "Lépéquipik", 2), new DefaultDef());
+            } else if (sword.equalsIgnoreCase("b")) {
+                return new War(name, pClass, hp, atk, new Epee(KindItemOff.Sword, "Warglaives", 4), new DefaultDef());
+            } else chooseClass(pClass, name, hp, atk);
+        }
+        return new Murloc(name, pClass, hp, atk);
     }
 
 
     /**
-     *  Welcome to the new hero and allow reset hero
+     * Welcome to the new hero and allow reset hero
      */
     private void welcomeNewHero(Personnage newP) {
         justwaitASec(1500);
@@ -155,7 +171,7 @@ public class Menu {
     }
 
     /**
-     *      Modify hero and maybe make it OP if not satisfy by classique choice
+     * Modify hero and maybe make it OP if not satisfy by classique choice
      */
     private void modifyPersonnage() {
         String name = this.inputName();

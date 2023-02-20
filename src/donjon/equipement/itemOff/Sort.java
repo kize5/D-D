@@ -11,11 +11,6 @@ abstract public class Sort extends EquipementOff{
 
     @Override
     public String toString() {
-        return "Sort{" +
-                "atk=" + atk +
-                ", type=" + type +
-                ", nom='" + nom + '\'' +
-                ", ptsAtk=" + ptsAtk +
-                '}';
+        return nom + " qui frappe pour " + atk + " de dégats";
     }
 }

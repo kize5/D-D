@@ -1,9 +1,11 @@
 package donjon.personnage;
 import donjon.equipement.Item;
+import donjon.equipement.buff.Buff;
+import donjon.equipement.buff.ThunderPotion;
+import donjon.equipement.itemDef.DefaultDef;
 import donjon.equipement.itemDef.EquipementDef;
-import donjon.equipement.itemOff.Epee;
+import donjon.equipement.itemOff.DefaultOff;
 import donjon.equipement.itemOff.EquipementOff;
-import donjon.equipement.itemOff.KindItemOff;
 
 abstract public class Personnage {
 
@@ -12,8 +14,10 @@ abstract public class Personnage {
     private int hp;
     private final int atk;
     private EquipementOff offItem;
+    private EquipementOff offItem2;
     private EquipementDef defItem;
     private boolean isAlive;
+    private Buff buff;
 
     /**
      * Construct for set up a new personnage
@@ -22,23 +26,27 @@ abstract public class Personnage {
      * @param hp Health points
      * @param atk Attack points
      */
-//    protected Personnage(String nom, KindClass type, int hp, int atk) {
-//        this.type = type;
-//        this.nom = nom;
-//        this.hp = hp;
-//        this.atk = atk;
-//        this.offItem = null;
-//        this.defItem = null;
-//        this.isAlive = true;
-//    }
+    protected Personnage(String nom, KindClass type, int hp, int atk) {
+        this.type = type;
+        this.nom = nom;
+        this.hp = hp;
+        this.atk = atk;
+        this.offItem = new DefaultOff();
+        this.offItem2 = new DefaultOff();
+        this.defItem = new DefaultDef();
+        this.buff = new ThunderPotion(0);
+        this.isAlive = true;
+    }
 
     protected Personnage(String nom, KindClass type, int hp, int atk, EquipementOff offItem, EquipementDef defItem) {
         this.type = type;
         this.nom = nom;
         this.hp = hp;
         this.atk = atk;
-        this.defItem = defItem;
         this.offItem = offItem;
+        this.offItem2 = new DefaultOff();
+        this.defItem = defItem;
+        this.buff = new ThunderPotion(0);
         this.isAlive = true;
     }
 
@@ -59,12 +67,21 @@ abstract public class Personnage {
         return atk;
     }
 
-    public void setoffItem (EquipementOff newOffItem) {
+    public void setOffItem(EquipementOff newOffItem) {
         this.offItem = newOffItem;
     }
 
-    public EquipementOff getoffItem (){
+    public EquipementOff getOffItem(){
         return offItem;
+    }
+
+
+    public EquipementOff getOffItem2() {
+        return offItem2;
+    }
+
+    public void setOffItem2(EquipementOff offItem2) {
+        this.offItem2 = offItem2;
     }
 
     public EquipementDef getDefItem() {
@@ -86,15 +103,23 @@ abstract public class Personnage {
         isAlive = alive;
     }
 
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public void setBuff(Buff buff) {
+        this.buff = buff;
+    }
+
     @Override
     public String toString() {
         return "Ton personnage " +
                 nom +
-                " de type " + type +
+                " de classe " + type +
                 " a " + hp +
                 " point de vie, " +
                 atk + " point d'attaque, " +
-                "un bonus offensif de " + offItem.getPtsAtk() +
+                "un bonus offensif de " + offItem.getPtsAtk() + " ou " + offItem2.getPtsAtk() +
                 " et un bonus défensif de " + defItem.getLevelDef() +
                 " \n";
     }

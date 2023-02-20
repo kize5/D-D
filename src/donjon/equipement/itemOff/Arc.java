@@ -11,7 +11,7 @@ public class Arc extends Arme{
      * @param nom
      * @param atk
      */
-    protected Arc(KindItemOff type, String nom, int atk) {
+    public Arc(KindItemOff type, String nom, int atk) {
         super(type, nom, atk);
     }
 
