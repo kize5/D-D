@@ -21,8 +21,9 @@ public class Main {
             Menu newPerso = new Menu(scanner, game, javaDB);
             newPerso.start();
             Personnage player = game.run();
-
-            javaDB.savePerso(player, scanner);
+            if (player.isAlive()) {
+                javaDB.savePerso(player, scanner);
+            }
         }
         scanner.close();
     }

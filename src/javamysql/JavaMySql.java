@@ -1,6 +1,5 @@
 package javamysql;
 
-import donjon.ennemi.Ennemi;
 import donjon.equipement.buff.Buff;
 import donjon.equipement.buff.ThunderPotion;
 import donjon.equipement.itemDef.*;
@@ -14,7 +13,6 @@ import static donjon.WaitSecAndASCII.*;
 
 public class JavaMySql {
 //    public static void main(String[] args) throws Exception{
-
     //        Properties props = new Properties();
 //        try ( FileInputStream fis = new FileInputStream("conf.properties")){
 //            props.load( fis );
@@ -84,6 +82,25 @@ public class JavaMySql {
                 resultatBuff.next();
                 int idItemBuff = resultatBuff.getInt("id");
 
+                try {
+                    String request = "SELECT * FROM personnage WHERE nom = ?";
+                    PreparedStatement stat = conn.prepareStatement(request);
+                    stat.setString(1, player.getNom());
+                    ResultSet resultNom = stat.executeQuery();
+                    resultNom.next();
+                    int nomtest = resultNom.getInt("id");
+
+                    String sql = "DELETE FROM personnage WHERE nom = ?";
+                    PreparedStatement stati = conn.prepareStatement(sql);
+                    stati.setString(1, player.getNom());
+                    int rowsDeleted = statement.executeUpdate();
+                    if (rowsDeleted > 0) {
+                        System.out.println("L'ancienne version du perso à était supprimé de la DB");
+                    }
+                } catch (Exception ignore)  {}
+
+                //insert if not exist
+
                 //Prépare la query qui va être envoyé à la base de donnée
                 String queryPlayer = "INSERT INTO personnage (type, nom, hp, atk, is_alive, item_off_id, item_off2_id, item_def_id, buff_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -106,6 +123,7 @@ public class JavaMySql {
             } catch (Exception ex) {
                 // handle any errors
                 System.out.println("SQLException: " + ex.getMessage());
+                ex.printStackTrace();
             }
         } else {
             slowPrint("D'accord, alors bon chance pour la suite ! \n", 30);
@@ -139,53 +157,14 @@ public class JavaMySql {
             int idItemdef = result.getInt("item_def_id");
             int idBuff = result.getInt("buff_id");
 
-            //récupère item offensif "1"
-            String requeteItemOff = "SELECT * FROM item_off WHERE id = ?";
-            PreparedStatement statementItemOff = conn.prepareStatement(requeteItemOff);
-            statementItemOff.setInt(1, idItemOff);
-            ResultSet resItemOff = statementItemOff.executeQuery();
-            resItemOff.next();
-            String typeItemOff = resItemOff.getString("type");
-            String nomItemOff = resItemOff.getString("nom");
-            int atkItemOff = resItemOff.getInt("atk");
-            KindItemOff typeitoff = KindItemOff.valueOf(typeItemOff);
-            EquipementOff itemoff = createItemoff(typeitoff, nomItemOff, atkItemOff);
-//            EquipementOff itemoff = getEquipOffID(conn, idItemOff);
-
-            //récupère item offensif "2"
-            String requeteItemOff2 = "SELECT * FROM item_off WHERE id = ?";
-            PreparedStatement statementItemOff2 = conn.prepareStatement(requeteItemOff2);
-            statementItemOff2.setInt(1, idItemOff2);
-            ResultSet resItemOff2 = statementItemOff2.executeQuery();
-            resItemOff2.next();
-            String typeItemOff2 = resItemOff2.getString("type");
-            String nomItemOff2 = resItemOff2.getString("nom");
-            int atkItemOff2 = resItemOff2.getInt("atk");
-            KindItemOff typeitoff2 = KindItemOff.valueOf(typeItemOff2);
-            EquipementOff itemoff2 = createItemoff(typeitoff2, nomItemOff2, atkItemOff2);
-
+            //récupère item offensif "1" via l'id
+            EquipementOff itemoff = getEquipOff(conn, idItemOff);
+            //récupère item offensif "2" via l'id
+            EquipementOff itemoff2 = getEquipOff(conn, idItemOff2);
             //Récupère item def
-            String requeteItemDef = "SELECT * FROM item_def WHERE id = ?";
-            PreparedStatement statementItemDef = conn.prepareStatement(requeteItemDef);
-            statementItemDef.setInt(1, idItemdef);
-            ResultSet resItemDef = statementItemDef.executeQuery();
-            resItemDef.next();
-            String typeItemDef = resItemDef.getString("type");
-            String nomItemDef = resItemDef.getString("nom");
-            int atkItemDef = resItemDef.getInt("def");
-            KindItemDef typeitDef = KindItemDef.valueOf(typeItemDef);
-            EquipementDef itemDef = createItemDef(typeitDef, nomItemDef, atkItemDef);
-
+            EquipementDef itemDef = getEquipDef(conn, idItemdef);
             //Récupère item buff
-            String requeteBuff = "SELECT * FROM buff WHERE id = ?";
-            PreparedStatement statementBuff = conn.prepareStatement(requeteBuff);
-            statementBuff.setInt(1, idBuff);
-            ResultSet resBuff = statementBuff.executeQuery();
-            resBuff.next();
-            String nomBuff = resBuff.getString("nom");
-            int durationBuff = resBuff.getInt("duration");
-            Buff itemBuff = createBuff(durationBuff, nomBuff);
-
+            Buff itemBuff = getBuff(conn, idBuff);
 
             return getPersoFromDB(nom, type, hp, atk, itemoff, itemoff2, itemDef, itemBuff, isAlive);
 
@@ -195,22 +174,57 @@ public class JavaMySql {
         return new Murloc("Bug", KindClass.Murloc, 5000, 5000);
     }
 
-//    private EquipementOff getEquipOffID (Connection conn, int idItemOff){
-//        try {
-//            String requeteItemOff = "SELECT * FROM item_off WHERE id = ?";
-//            PreparedStatement statementItemOff = conn.prepareStatement(requeteItemOff);
-//            statementItemOff.setInt(1, idItemOff);
-//            ResultSet resItemOff = statementItemOff.executeQuery();
-//            resItemOff.next();
-//            String typeItemOff = resItemOff.getString("type");
-//            String nomItemOff = resItemOff.getString("nom");
-//            int atkItemOff = resItemOff.getInt("atk");
-//            KindItemOff typeitoff = KindItemOff.valueOf(typeItemOff);
-//            EquipementOff itemoff = createItemoff(typeitoff, nomItemOff, atkItemOff);
-//        } catch (Exception e) {
-//            System.out.println("SQLerror" + e.getMessage());
-//        }
-//    }
+    /**
+     * créer un nouvel équipement off similaire au précédent du joueur via l'id
+     * @param conn connection au SQL
+     * @return l'item off
+     */
+    private EquipementOff getEquipOff(Connection conn, int idItemOff){
+        try {
+            String requeteItemOff = "SELECT * FROM item_off WHERE id = ?";
+            PreparedStatement statementItemOff = conn.prepareStatement(requeteItemOff);
+            statementItemOff.setInt(1, idItemOff);
+            ResultSet resItemOff = statementItemOff.executeQuery();
+            resItemOff.next();
+            String typeItemOff = resItemOff.getString("type");
+            String nomItemOff = resItemOff.getString("nom");
+            int atkItemOff = resItemOff.getInt("atk");
+            KindItemOff typeitoff = KindItemOff.valueOf(typeItemOff);
+            return createItemoff(typeitoff, nomItemOff, atkItemOff);
+        } catch (Exception e) {
+            System.out.println("SQLerror" + e.getMessage());
+        } return new DefaultOff();
+    }
+    private EquipementDef getEquipDef(Connection conn, int idItemdef){
+        try {
+            String requeteItemDef = "SELECT * FROM item_def WHERE id = ?";
+            PreparedStatement statementItemDef = conn.prepareStatement(requeteItemDef);
+            statementItemDef.setInt(1, idItemdef);
+            ResultSet resItemDef = statementItemDef.executeQuery();
+            resItemDef.next();
+            String typeItemDef = resItemDef.getString("type");
+            String nomItemDef = resItemDef.getString("nom");
+            int atkItemDef = resItemDef.getInt("def");
+            KindItemDef typeitDef = KindItemDef.valueOf(typeItemDef);
+            return createItemDef(typeitDef, nomItemDef, atkItemDef);
+        } catch (Exception e) {
+            System.out.println("SQLerror" + e.getMessage());
+        } return new DefaultDef();
+    }
+    private Buff getBuff(Connection conn, int idBuff) {
+        try {
+        String requeteBuff = "SELECT * FROM buff WHERE id = ?";
+        PreparedStatement statementBuff = conn.prepareStatement(requeteBuff);
+        statementBuff.setInt(1, idBuff);
+        ResultSet resBuff = statementBuff.executeQuery();
+        resBuff.next();
+        String nomBuff = resBuff.getString("nom");
+        int durationBuff = resBuff.getInt("duration");
+        return createBuff(durationBuff, nomBuff);
+        } catch (Exception e) {
+            System.out.println("SQLerror" + e.getMessage());
+        } return new ThunderPotion(0,"Thunder potion");
+    }
 
     //  Factory à perso
     private Personnage getPersoFromDB(String nom, KindClass type, int hp, int atk, EquipementOff offItem,EquipementOff offItem2, EquipementDef defItem, Buff buff, Boolean isAlive) {

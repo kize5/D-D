@@ -86,7 +86,7 @@ public class Fight {
             slowPrint("L'ennemi te frappe pour " + enemyAtk + ", tu es donc à " + playerHp + " point de vie \n", 30);
             player.setHp(playerHp);
         } else {
-            slowPrint(enemy.getType() + " : 'Oh non je ne peux pas taper les faibles " + player.getType() + ", stupide game-design ... \n", 30);
+            slowPrint(enemy.getType() + " : 'Oh non je ne peux pas taper les faibles " + player.getType() + ", stupide game-design ...' \n", 30);
         }
     }
 
