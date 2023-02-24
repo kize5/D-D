@@ -12,10 +12,10 @@ public class ArcaneBlast extends Sort{
     public ArcaneBlast(){
         super(KindItemOff.Spell, "arcane blast", 5);
     }
-    public boolean damageBoost(Ennemi ennemi) {
+    public int damageBoost(Ennemi ennemi) {
         if (ennemi instanceof Spectre) {
             // add +3 damage
-            return true;
-        } return false;
+            return 3;
+        } return 0;
     }
 }

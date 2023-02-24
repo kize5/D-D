@@ -43,7 +43,7 @@ abstract public class EquipementOff extends Item {
         this.ptsAtk = ptsAtk;
     }
 
-   abstract public boolean damageBoost(Ennemi ennemi);
+   abstract public int damageBoost(Ennemi ennemi);
 
     @Override
     public String toString() {

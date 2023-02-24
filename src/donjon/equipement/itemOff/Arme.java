@@ -10,10 +10,6 @@ abstract public class Arme extends EquipementOff{
 
     @Override
     public String toString() {
-        return "Arme{" +
-                ", type=" + type +
-                ", nom='" + nom + '\'' +
-                ", ptsAtk=" + ptsAtk +
-                '}';
+        return nom + " qui frappe pour " + ptsAtk + " de dégats ";
     }
 }

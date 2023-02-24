@@ -34,7 +34,7 @@ abstract public class Personnage {
         this.offItem = new DefaultOff();
         this.offItem2 = new DefaultOff();
         this.defItem = new DefaultDef();
-        this.buff = new ThunderPotion(0);
+        this.buff = new ThunderPotion(0, "Thunder Potion");
         this.isAlive = true;
     }
 
@@ -46,8 +46,20 @@ abstract public class Personnage {
         this.offItem = offItem;
         this.offItem2 = new DefaultOff();
         this.defItem = defItem;
-        this.buff = new ThunderPotion(0);
+        this.buff = new ThunderPotion(0, "Thunder Potion");
         this.isAlive = true;
+    }
+
+    protected Personnage(String nom, KindClass type, int hp, int atk, EquipementOff offItem,EquipementOff offItem2, EquipementDef defItem, Buff buff, Boolean isAlive) {
+        this.type = type;
+        this.nom = nom;
+        this.hp = hp;
+        this.atk = atk;
+        this.offItem = offItem;
+        this.offItem2 = offItem2;
+        this.defItem = defItem;
+        this.buff = buff;
+        this.isAlive = isAlive;
     }
 
     public String getNom() {

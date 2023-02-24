@@ -1,5 +1,8 @@
 package donjon;
 
+import donjon.personnage.Personnage;
+import javamysql.JavaMySql;
+
 import java.util.Scanner;
 
 /**
@@ -11,12 +14,15 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         while (continuer) {
+            JavaMySql javaDB = new JavaMySql();
             //Initialise le donjon
             Game game = new Game(scanner);
             // Lance la création d'un nouveau personnage ou permet de quitter
-            Menu newPerso = new Menu(scanner, game);
+            Menu newPerso = new Menu(scanner, game, javaDB);
             newPerso.start();
-            game.run();
+            Personnage player = game.run();
+
+            javaDB.savePerso(player, scanner);
         }
         scanner.close();
     }

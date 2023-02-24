@@ -1,9 +1,6 @@
 package donjon;
 
-import donjon.ennemi.Dragon;
 import donjon.ennemi.Ennemi;
-import donjon.ennemi.Spectre;
-import donjon.equipement.buff.ThunderPotion;
 import donjon.equipement.itemDef.EquipementDef;
 import donjon.equipement.itemOff.DefaultOff;
 import donjon.equipement.itemOff.EquipementOff;
@@ -36,7 +33,7 @@ public class Fight {
 
         useThunder(player);
 
-        chooseItemOff(player, enemy, playerPose);
+        chooseItemOff(player);
 
         while (enemyHp > 0 && playerHp > 0) {
             playerTurn(enemy);
@@ -48,7 +45,7 @@ public class Fight {
                 return;
             } else if (enemyHp <= 0) {
                 enemy.setAlive(false);
-                slowPrint("Le cadavre de ton ennemi gît au sol, bien joué champion, continue ! \n",30);
+                slowPrint("Le cadavre de ton ennemi gît au sol, bien joué champion, continue ! \n", 30);
                 return;
             }
             if (stillAliveRun()) {
@@ -65,27 +62,18 @@ public class Fight {
         String run = scanner.nextLine();
         if (run.equalsIgnoreCase("b")) {
             Game.playerPose = playerPoseFight - 2;
-            slowPrint("Tu désengages le combat comme un champion, cours à une vitesse dingue, retourne 2 case en arrière dans la pièce " + Game.playerPose + ", voilà une fuite digne des plus grands lâches, bien joué ! \n",30);
+            slowPrint("Tu désengages le combat comme un champion, cours à une vitesse dingue, retourne 2 case en arrière dans la pièce " + Game.playerPose + ", voilà une fuite digne des plus grands lâches, bien joué ! \n", 30);
             return true;
-        } return false;
+        }
+        return false;
     }
 
     /**
      * Player turn during a fight
      */
     private void playerTurn(Ennemi enemy) {
-        if (playerItemOff.damageBoost(enemy)) {
-            if (enemy instanceof Dragon) {
-                enemyHp = enemyHp - (playerAtk + playerItemOff.getPtsAtk() + 2);
-                slowPrint("Tu frappes l'ennemi pour " + playerAtk + " + " + playerItemOff.getPtsAtk() + " + 2" + ", il a maintenant " + enemyHp + " point de vie \n", 30);
-            } else if (enemy instanceof Spectre) {
-                enemyHp = enemyHp - (playerAtk + playerItemOff.getPtsAtk() + 3);
-                slowPrint("Tu frappes l'ennemi pour " + playerAtk+ " + " + playerItemOff.getPtsAtk() + " + 3" + ", il a maintenant " + enemyHp + " point de vie \n", 30);
-            }
-        } else {
-            enemyHp = enemyHp - (playerAtk + playerItemOff.getPtsAtk());
-            slowPrint("Tu frappes l'ennemi pour " + playerAtk+ " + " + playerItemOff.getPtsAtk() + ", il a maintenant " + enemyHp + " point de vie \n", 30);
-        }
+        enemyHp = enemyHp - (playerAtk + playerItemOff.getPtsAtk() + playerItemOff.damageBoost(enemy));
+        slowPrint("Tu frappes l'ennemi pour " + playerAtk + " + " + playerItemOff.getPtsAtk() + " + " + playerItemOff.damageBoost(enemy) + ", il a maintenant " + enemyHp + " point de vie \n", 30);
         enemy.setHp(enemyHp);
     }
 
@@ -98,11 +86,11 @@ public class Fight {
             slowPrint("L'ennemi te frappe pour " + enemyAtk + ", tu es donc à " + playerHp + " point de vie \n", 30);
             player.setHp(playerHp);
         } else {
-            slowPrint(enemy.getType() + " : 'Oh non je ne peux pas taper les faibles " + player.getType() + ", stupide game-design ... \n",30);
+            slowPrint(enemy.getType() + " : 'Oh non je ne peux pas taper les faibles " + player.getType() + ", stupide game-design ... \n", 30);
         }
     }
 
-    private void chooseItemOff (Personnage player, Ennemi enemy, int playerPose){
+    private void chooseItemOff(Personnage player) {
         if (!(player.getOffItem() instanceof DefaultOff) || !(player.getOffItem2() instanceof DefaultOff)) {
 //            slowPrint("Voici ce que tu as en ce moment comme arme : \n", 30);
             slowPrint("Appuie sur 'a' pour utiliser cette arme : " + player.getOffItem() + " \n", 30);
@@ -114,22 +102,24 @@ public class Fight {
                 this.playerItemOff = player.getOffItem2();
             } else {
                 slowPrint("Saisie incorrecte \n", 30);
-                chooseItemOff(player, enemy, playerPose);
+                chooseItemOff(player);
             }
         }
     }
 
-    private void useThunder (Personnage player) {
-        if (player.getBuff() instanceof ThunderPotion && player.getBuff().getDuration() > 0){
-            slowPrint("Press 'a' pour utiliser ta ThunderPotion sur ce combat, sinon press 'b' \n",30);
+    private void useThunder(Personnage player) {
+        if (player.getBuff().isActive() > 0) {
+            slowPrint("Press 'a' pour utiliser ta " + player.getBuff().getNom() + " sur ce combat, sinon press 'b' \n", 30);
             String buff = scanner.nextLine();
             if (buff.equalsIgnoreCase("a")) {
-                playerAtk = playerAtk * 2;
+                playerAtk = player.getBuff().effect(playerAtk);
                 player.getBuff().setDuration(-1);
             } else if (buff.equalsIgnoreCase("b")) {
-                slowPrint("Elle sera conversé pour plus tard alors \n",30);
-            } else slowPrint("Saisie incorrecte",30);
-             useThunder(player);
+                slowPrint("Elle sera conversé pour plus tard alors \n", 30);
+            } else {
+                slowPrint("Saisie incorrecte", 30);
+                useThunder(player);
+            }
         }
     }
 }

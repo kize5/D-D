@@ -1,5 +1,6 @@
 package donjon.personnage;
 
+import donjon.equipement.buff.Buff;
 import donjon.equipement.itemDef.Bouclier;
 import donjon.equipement.itemDef.EquipementDef;
 import donjon.equipement.itemOff.Arme;
@@ -23,6 +24,10 @@ public class War extends Personnage{
     }
     public War(String nom, KindClass type, int hp, int atk) {
         super(nom, type, hp, atk);
+    }
+
+    public War(String nom, KindClass type, int hp, int atk, EquipementOff offItem, EquipementOff offItem2, EquipementDef defItem, Buff buff, Boolean isAlive) {
+        super(nom, type, hp, atk, offItem, offItem2,defItem,buff,isAlive);
     }
 
     @Override

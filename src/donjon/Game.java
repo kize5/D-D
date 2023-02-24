@@ -18,10 +18,7 @@ public class Game {
 
     public static int playerPose;
     Personnage player;
-    private boolean running;
-    private boolean playerAlive;
     public boolean leaveGame;
-
     Board board;
 
     /**
@@ -32,8 +29,6 @@ public class Game {
         BoardCases = 64;
         playerPose = 0;
         leaveGame = false;
-        running = false;
-        playerAlive = false;
         board = new Board();
     }
 
@@ -48,11 +43,11 @@ public class Game {
     /**
      * Main method, call the other to make player move and win or not
      */
-    public void run() {
+    public Personnage run() {
         //Break infint loop of continuer to end this game
         if (leaveGame) {
             Main.continuer = false;
-            return;
+            return player;
         }
         //Entrance
         entrance();
@@ -62,10 +57,11 @@ public class Game {
         if (player.isAlive()) {
             win();
         }
+        return player;
     }
 
     /**
-     * Allow payer to move on board by using rollDice() method
+     * Allow player to move on board by using rollDice() method
      */
     private void playerMove() {
         while (playerPose != BoardCases && playerPose < 64) {
@@ -75,20 +71,23 @@ public class Game {
                 if (Objects.equals(go, "")) {
                     rollDice();
                     checkCase();
+                    if (!(player.isAlive())) {
+                        justwaitASec(250);
+                        slowPrint(drawRip(),3);
+                        slowPrint("Ha bas c'est con, t'es mort par terre ... \n", 30);
+                        return;
+                    }
                 }
                 justwaitASec(250);
-            } else {slowPrint(drawRip(),3);
-                    slowPrint("Ha bas c'est con, t'es mort par terre ...", 30);
-                    return;
             }
         }
-        try {
-            if (playerPose > 64) {
-                throw new IllegalStateException("Player position cannot be greater than 64");
-            }
-        } catch (Exception e) {
-            slowPrint(e + " : Huge bug btw", 30);
-        }
+//        try {
+//            if (playerPose > 64) {
+//                throw new IllegalStateException("Player position cannot be greater than 64");
+//            }
+//        } catch (Exception e) {
+//            slowPrint(e + " : Huge bug btw", 30);
+//        }
     }
 
     public void checkCase() {
@@ -150,13 +149,5 @@ public class Game {
             justwaitASec(3000);
             slowPrint("Tu sens franchement mauvais, mais tu es un aventurier, c'est un donjon, alors en route ! Tu avances dans la pièce face à toi. \n", 30);
         }
-    }
-
-    public int getPlayerPose() {
-        return playerPose;
-    }
-
-    public void setPlayerPose(int playerPose) {
-        this.playerPose = playerPose;
     }
 }

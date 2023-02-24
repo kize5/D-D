@@ -3,6 +3,7 @@ package donjon;
 import donjon.equipement.itemDef.DefaultDef;
 import donjon.equipement.itemOff.*;
 import donjon.personnage.*;
+import javamysql.JavaMySql;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -16,6 +17,7 @@ import static donjon.WaitSecAndASCII.*;
 public class Menu {
     private final Scanner scanner;
     private final Game game;
+    private JavaMySql javaDB;
 
     /**
      * Constructor
@@ -23,9 +25,10 @@ public class Menu {
      * @param scanner Take scanner from main
      * @param game    Take a new game instance from main
      */
-    public Menu(Scanner scanner, Game game) {
+    public Menu(Scanner scanner, Game game, JavaMySql javaDB) {
         this.scanner = scanner;
         this.game = game;
+        this.javaDB = javaDB;
     }
 
     /**
@@ -78,8 +81,8 @@ public class Menu {
         String go = scanner.nextLine();  // Read user input
         if (Objects.equals(go, "a")) {
             justwaitASec(500);
-            slowPrint("Alors c'est partie, créons ton perso ! \n", 30);
-            createPersonnage();
+            saveOrNewPerso();
+//            createPersonnage();
             return;
         }
         if (Objects.equals(go, "exit")) {
@@ -87,6 +90,22 @@ public class Menu {
         } else {
             slowPrint("Saisie incorrecte \n", 30);
             start();
+        }
+    }
+
+    private void saveOrNewPerso() {
+        slowPrint("Alors c'est partie, créons ton perso ! \n", 30);
+        slowPrint("Appuie sur 'a' pour récupérer ton perso sauvegardé \n",30);
+        slowPrint("Appuie sur 'b' pour créer un nouveau perso \n",30);
+        String persoSaveOrNot = scanner.nextLine();
+        if (persoSaveOrNot.equalsIgnoreCase("a")) {
+            Personnage newP = javaDB.getPersoFromDB(scanner);
+            welcomeNewHero(newP);
+        } else if (persoSaveOrNot.equalsIgnoreCase("b")) {
+            createPersonnage();
+        } else {
+            slowPrint("Saisie incorrect \n",30);
+            saveOrNewPerso();
         }
     }
 

@@ -4,20 +4,16 @@ import donjon.ennemi.Ennemi;
 
 public class Epee extends Arme{
     
-    KindItemOff type;
-    String nom;
-    int atk;
+//    KindItemOff type;
+//    String nom;
+//    int atk;
     public Epee(KindItemOff type, String nom, int atk) {
         super(type, nom, atk);
     }
 
     @Override
-    public boolean damageBoost(Ennemi ennemi) {
-        return false;
-    }
-
-    public Epee warGlaives() {
-        return new Epee(KindItemOff.Sword, "warglaives", 6);
+    public int damageBoost(Ennemi ennemi) {
+        return 0;
     }
 
     @Override

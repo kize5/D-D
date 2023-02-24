@@ -377,7 +377,7 @@ public class WaitSecAndASCII {
                       `/|)    |    /
                         /     |   |
                       .'      |   |
-                jgs  /         \\  |
+                     /         \\  |
                     (_.-.__.__./  / \n
                                               """;
     }

@@ -1,6 +1,7 @@
 package donjon.personnage;
 
 import donjon.equipement.Item;
+import donjon.equipement.buff.Buff;
 import donjon.equipement.itemDef.Barriere;
 import donjon.equipement.itemDef.EquipementDef;
 import donjon.equipement.itemOff.EquipementOff;
@@ -28,6 +29,10 @@ public class Mage extends Personnage{
 
     public Mage(String nom, KindClass type, int hp, int atk) {
         super(nom, type, hp, atk);
+    }
+
+    public Mage(String nom, KindClass type, int hp, int atk, EquipementOff offItem, EquipementOff offItem2, EquipementDef defItem, Buff buff, Boolean isAlive) {
+        super(nom, type, hp, atk, offItem, offItem2,defItem,buff,isAlive);
     }
 
     @Override

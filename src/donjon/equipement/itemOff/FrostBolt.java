@@ -8,7 +8,7 @@ public class FrostBolt extends Sort{
     }
 
     @Override
-    public boolean damageBoost(Ennemi ennemi) {
-        return false;
+    public int damageBoost(Ennemi ennemi) {
+        return 0;
     }
 }

@@ -125,7 +125,7 @@ public class LootCase implements Case {
                 } else notForYou();
             }
             case 15 -> {
-                buff = new ThunderPotion(1);
+                buff = new ThunderPotion(1, "Thunder Potion");
                 slowPrint(drawThunderPotion(),3);
                 slowPrint("Tu viens de trouver une ThunderPotion ! Tes dégats seront doublé au prochain combat",30);
                 player.setBuff(buff);
