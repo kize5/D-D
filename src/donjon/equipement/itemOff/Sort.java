@@ -4,8 +4,8 @@ import donjon.ennemi.Ennemi;
 
 abstract public class Sort extends EquipementOff{
     int atk;
-    public Sort(KindItemOff type, String nom, int atk) {
-        super(type, nom, atk);
+    public Sort(KindItemOff type, String nom, int atk, String desc) {
+        super(type, nom, atk, desc);
         this.atk = atk;
     }
 

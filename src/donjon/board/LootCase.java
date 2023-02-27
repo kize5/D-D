@@ -10,6 +10,11 @@ import donjon.equipement.itemOff.*;
 import donjon.equipement.potion.*;
 import donjon.personnage.Personnage;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,12 +28,18 @@ public class LootCase implements Case {
     Potion potion;
     Personnage player;
     int rng;
+    int rngTestForLIist;
     Scanner scanner;
+
+    ArrayList<EquipementOff> listLootOff;
 
     @Override
     public void apply(Personnage player, int playerPose, Scanner scanner) {
         this.player = player;
         this.scanner = scanner;
+        this.listLootOff = new ArrayList<>();
+        callDBForLoot();
+        lootTableFromDB();
         randomLine();
         setRng();
         if (playerPose < 35) {
@@ -39,6 +50,46 @@ public class LootCase implements Case {
         slowPrint(player.toString(), 30);
     }
 
+    private void callDBForLoot() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/donjon", "root", "");
+            String requeteOff = "SELECT * FROM item_off";
+            PreparedStatement statement = conn.prepareStatement(requeteOff);
+//            statement.setString(1, player.getOffItem().getNom());
+            ResultSet resultatOff = statement.executeQuery();
+            while (resultatOff.next()) {
+//                int idItemOff = resultatOff.getInt("id");
+                String classItemOff = resultatOff.getString("item_class");
+                String typeItemOff = resultatOff.getString("type");
+                KindItemOff type = KindItemOff.valueOf(typeItemOff);
+                String nomItemOff = resultatOff.getString("nom");
+                int atkItemOff = resultatOff.getInt("atk");
+
+                Class<?> itemOffClass = Class.forName(classItemOff);
+                Object itemOffObject = null;
+                try {
+                    itemOffObject = itemOffClass.getConstructor(KindItemOff.class, String.class, int.class).newInstance(type, nomItemOff, atkItemOff);
+                } catch (NoSuchMethodException e) {
+                    itemOffObject = itemOffClass.getDeclaredConstructor().newInstance();
+                }
+                if (itemOffObject instanceof EquipementOff) {
+                    listLootOff.add((EquipementOff) itemOffObject);
+                }
+//                System.out.println(classItemOff + " " + nomItemOff  + " " + type + " " + atkItemOff);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void lootTableFromDB () {
+        setRngTestForLIist();
+        EquipementOff test = listLootOff.get(rngTestForLIist);
+        System.out.println(test);
+    }
 
     public void generateNmLoot(int rng) {
         switch (rng) {
@@ -126,8 +177,8 @@ public class LootCase implements Case {
             }
             case 15 -> {
                 buff = new ThunderPotion(1, "Thunder Potion");
-                slowPrint(drawThunderPotion(),3);
-                slowPrint("Tu viens de trouver une ThunderPotion ! Tes dégats seront doublé au prochain combat",30);
+                slowPrint(drawThunderPotion(), 3);
+                slowPrint("Tu viens de trouver une ThunderPotion ! Tes dégats seront doublé au prochain combat", 30);
                 player.setBuff(buff);
             }
         }
@@ -221,22 +272,22 @@ public class LootCase implements Case {
     }
 
     private void findLootOff() {
-            slowPrint("Tu viens de trouver " + lootOff + " ! \n",30);
-            slowPrint("Voici ce que tu as en ce moment : \n",30);
-            slowPrint("Appuie sur 'a' pour remplacer cet équipement : " + player.getOffItem()+" \n",30);
-            slowPrint("Appuie sur 'b' pour remplacer cet équipement : " + player.getOffItem2()+" \n",30);
-            slowPrint("Sinon tape 'drop' pour le laisser au sol \n",30);
-            String pick = scanner.nextLine();
-            if (pick.equalsIgnoreCase("a")) {
+        slowPrint("Tu viens de trouver " + lootOff + " ! \n", 30);
+        slowPrint("Voici ce que tu as en ce moment : \n", 30);
+        slowPrint("Appuie sur 'a' pour remplacer cet équipement : " + player.getOffItem() + " \n", 30);
+        slowPrint("Appuie sur 'b' pour remplacer cet équipement : " + player.getOffItem2() + " \n", 30);
+        slowPrint("Sinon tape 'drop' pour le laisser au sol \n", 30);
+        String pick = scanner.nextLine();
+        if (pick.equalsIgnoreCase("a")) {
             player.setOffItem((lootOff));
-            } else if (pick.equalsIgnoreCase("b")){
-                player.setOffItem2(lootOff);
-            } else if (pick.equalsIgnoreCase("drop")) {
-                slowPrint("Tu laisses l'item au sol, quel gâchis ... \n", 30);
-            } else {
-                slowPrint("Saisie incorrecte \n", 30);
-                findLootOff();
-            }
+        } else if (pick.equalsIgnoreCase("b")) {
+            player.setOffItem2(lootOff);
+        } else if (pick.equalsIgnoreCase("drop")) {
+            slowPrint("Tu laisses l'item au sol, quel gâchis ... \n", 30);
+        } else {
+            slowPrint("Saisie incorrecte \n", 30);
+            findLootOff();
+        }
     }
 
     private void checkIfBetterDef() {
@@ -252,6 +303,10 @@ public class LootCase implements Case {
 
     public void setRng() {
         rng = ThreadLocalRandom.current().nextInt(0, 16);
+    }
+
+    private void setRngTestForLIist() {
+        rngTestForLIist = ThreadLocalRandom.current().nextInt(0, listLootOff.size());
     }
 
     private void randomLine() {

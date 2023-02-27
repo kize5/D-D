@@ -113,7 +113,7 @@ public class Fight {
             String buff = scanner.nextLine();
             if (buff.equalsIgnoreCase("a")) {
                 playerAtk = player.getBuff().effect(playerAtk);
-                player.getBuff().setDuration(-1);
+                player.getBuff().setDuration( player.getBuff().getDuration() - 1 );
             } else if (buff.equalsIgnoreCase("b")) {
                 slowPrint("Elle sera conversé pour plus tard alors \n", 30);
             } else {

@@ -1,4 +1,4 @@
-package javamysql;
+package donjon;
 
 import donjon.equipement.buff.Buff;
 import donjon.equipement.buff.ThunderPotion;
@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 import static donjon.WaitSecAndASCII.*;
 
-public class JavaMySql {
-//    public static void main(String[] args) throws Exception{
+public class SavePlayerMySql {
+    //    public static void main(String[] args) throws Exception{
     //        Properties props = new Properties();
 //        try ( FileInputStream fis = new FileInputStream("conf.properties")){
 //            props.load( fis );
@@ -82,24 +82,8 @@ public class JavaMySql {
                 resultatBuff.next();
                 int idItemBuff = resultatBuff.getInt("id");
 
-                try {
-                    String request = "SELECT * FROM personnage WHERE nom = ?";
-                    PreparedStatement stat = conn.prepareStatement(request);
-                    stat.setString(1, player.getNom());
-                    ResultSet resultNom = stat.executeQuery();
-                    resultNom.next();
-                    int nomtest = resultNom.getInt("id");
-
-                    String sql = "DELETE FROM personnage WHERE nom = ?";
-                    PreparedStatement stati = conn.prepareStatement(sql);
-                    stati.setString(1, player.getNom());
-                    int rowsDeleted = statement.executeUpdate();
-                    if (rowsDeleted > 0) {
-                        System.out.println("L'ancienne version du perso à était supprimé de la DB");
-                    }
-                } catch (Exception ignore)  {}
-
                 //insert if not exist
+                deleteIfExist(conn, player);
 
                 //Prépare la query qui va être envoyé à la base de donnée
                 String queryPlayer = "INSERT INTO personnage (type, nom, hp, atk, is_alive, item_off_id, item_off2_id, item_def_id, buff_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -127,6 +111,31 @@ public class JavaMySql {
             }
         } else {
             slowPrint("D'accord, alors bon chance pour la suite ! \n", 30);
+        }
+    }
+
+    private void deleteIfExist(Connection conn, Personnage player) {
+        try {
+            String request = "SELECT * FROM personnage WHERE nom = ?";
+            PreparedStatement stat = conn.prepareStatement(request);
+            stat.setString(1, player.getNom());
+            ResultSet resultNom = stat.executeQuery();
+            // add if plus tard ici
+            if (resultNom.next()) {
+                int nomtest = resultNom.getInt("id");
+
+                String sql = "DELETE FROM personnage WHERE id = ?";
+                PreparedStatement stati = conn.prepareStatement(sql);
+                stati.setInt(1, nomtest);
+                int rowsDeleted = stati.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("L'ancienne version du perso à était supprimé de la DB");
+                }
+            } else {
+                System.out.println("Aucune ligne trouvé dans la DB avec ce pseudo");
+            }
+        } catch (Exception e) {
+            System.out.println("Error : " + e.getMessage());
         }
     }
 
@@ -176,10 +185,11 @@ public class JavaMySql {
 
     /**
      * créer un nouvel équipement off similaire au précédent du joueur via l'id
+     *
      * @param conn connection au SQL
      * @return l'item off
      */
-    private EquipementOff getEquipOff(Connection conn, int idItemOff){
+    private EquipementOff getEquipOff(Connection conn, int idItemOff) {
         try {
             String requeteItemOff = "SELECT * FROM item_off WHERE id = ?";
             PreparedStatement statementItemOff = conn.prepareStatement(requeteItemOff);
@@ -193,9 +203,11 @@ public class JavaMySql {
             return createItemoff(typeitoff, nomItemOff, atkItemOff);
         } catch (Exception e) {
             System.out.println("SQLerror" + e.getMessage());
-        } return new DefaultOff();
+        }
+        return new DefaultOff();
     }
-    private EquipementDef getEquipDef(Connection conn, int idItemdef){
+
+    private EquipementDef getEquipDef(Connection conn, int idItemdef) {
         try {
             String requeteItemDef = "SELECT * FROM item_def WHERE id = ?";
             PreparedStatement statementItemDef = conn.prepareStatement(requeteItemDef);
@@ -209,25 +221,28 @@ public class JavaMySql {
             return createItemDef(typeitDef, nomItemDef, atkItemDef);
         } catch (Exception e) {
             System.out.println("SQLerror" + e.getMessage());
-        } return new DefaultDef();
+        }
+        return new DefaultDef();
     }
+
     private Buff getBuff(Connection conn, int idBuff) {
         try {
-        String requeteBuff = "SELECT * FROM buff WHERE id = ?";
-        PreparedStatement statementBuff = conn.prepareStatement(requeteBuff);
-        statementBuff.setInt(1, idBuff);
-        ResultSet resBuff = statementBuff.executeQuery();
-        resBuff.next();
-        String nomBuff = resBuff.getString("nom");
-        int durationBuff = resBuff.getInt("duration");
-        return createBuff(durationBuff, nomBuff);
+            String requeteBuff = "SELECT * FROM buff WHERE id = ?";
+            PreparedStatement statementBuff = conn.prepareStatement(requeteBuff);
+            statementBuff.setInt(1, idBuff);
+            ResultSet resBuff = statementBuff.executeQuery();
+            resBuff.next();
+            String nomBuff = resBuff.getString("nom");
+            int durationBuff = resBuff.getInt("duration");
+            return createBuff(durationBuff, nomBuff);
         } catch (Exception e) {
             System.out.println("SQLerror" + e.getMessage());
-        } return new ThunderPotion(0,"Thunder potion");
+        }
+        return new ThunderPotion(0, "Thunder potion");
     }
 
     //  Factory à perso
-    private Personnage getPersoFromDB(String nom, KindClass type, int hp, int atk, EquipementOff offItem,EquipementOff offItem2, EquipementDef defItem, Buff buff, Boolean isAlive) {
+    private Personnage getPersoFromDB(String nom, KindClass type, int hp, int atk, EquipementOff offItem, EquipementOff offItem2, EquipementDef defItem, Buff buff, Boolean isAlive) {
         if (type == KindClass.Mage) {
             return new Mage(nom, type, hp, atk, offItem, offItem2, defItem, buff, isAlive);
         } else if (type == KindClass.War) {
@@ -241,32 +256,39 @@ public class JavaMySql {
 
     // factory à equipment offensif
     private EquipementOff createItemoff(KindItemOff type, String nom, int atk) {
-        if (type == KindItemOff.Sword) {return new Epee(type, nom, atk);}
-        else if (type == KindItemOff.Arc) {return new Arc(type, nom, atk);}
-        else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Fire ball")) {return new FireBall(type, nom, atk);}
-        else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Frost bolt")) {return new FrostBolt(type, nom, atk);}
-        else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Arcane blast")) {return new ArcaneBlast(type, nom, atk);}
-        else {
+        if (type == KindItemOff.Sword) {
+            return new Epee(type, nom, atk);
+        } else if (type == KindItemOff.Arc) {
+            return new Arc(type, nom, atk);
+        } else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Fire ball")) {
+            return new FireBall(type, nom, atk);
+        } else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Frost bolt")) {
+            return new FrostBolt(type, nom, atk);
+        } else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Arcane blast")) {
+            return new ArcaneBlast(type, nom, atk);
+        } else {
             return new DefaultOff();
         }
     }
 
     //factory item def
     private EquipementDef createItemDef(KindItemDef type, String nom, int def) {
-        if (type == KindItemDef.Bouclier) {return new Bouclier(type, nom, def);}
-        else if (type == KindItemDef.IceBarrier) {return new Barriere(type, nom, def);}
-        else {
+        if (type == KindItemDef.Bouclier) {
+            return new Bouclier(type, nom, def);
+        } else if (type == KindItemDef.IceBarrier) {
+            return new Barriere(type, nom, def);
+        } else {
             return new DefaultDef();
         }
     }
 
     //factory buff
-    private Buff createBuff( int duration, String nom) {
+    private Buff createBuff(int duration, String nom) {
         if (nom.equalsIgnoreCase("Thunder Potion")) {
             return new ThunderPotion(duration, nom);
-        }else return new ThunderPotion(0, nom);
+        } else return new ThunderPotion(0, nom);
     }
 
-    }
+}
 
 

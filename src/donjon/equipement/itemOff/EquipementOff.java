@@ -8,14 +8,16 @@ abstract public class EquipementOff extends Item {
     KindItemOff type;
     String nom;
     int ptsAtk;
+    String desc;
 
     /**
      * Construct for all offensive equipment
      */
-    protected EquipementOff(KindItemOff type, String nom, int atk) {
+    protected EquipementOff(KindItemOff type, String nom, int atk, String desc) {
         this.type = type;
         this.nom = nom;
         this.ptsAtk = atk;
+        this.desc = desc;
     }
 
 
@@ -43,7 +45,16 @@ abstract public class EquipementOff extends Item {
         this.ptsAtk = ptsAtk;
     }
 
-   abstract public int damageBoost(Ennemi ennemi);
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+
+    abstract public int damageBoost(Ennemi ennemi);
 
     @Override
     public String toString() {

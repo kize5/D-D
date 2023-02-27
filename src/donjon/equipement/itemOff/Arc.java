@@ -4,11 +4,13 @@ import donjon.ennemi.Dragon;
 import donjon.ennemi.Ennemi;
 
 public class Arc extends Arme{
+
+
     /**
      * Construct for all offensive equipment
      */
-    public Arc(KindItemOff type, String nom, int atk) {
-        super(type, nom, atk);
+    public Arc(KindItemOff type, String nom, int atk, String desc) {
+        super(type, nom, atk, desc);
     }
 
     public int damageBoost(Ennemi ennemi) {

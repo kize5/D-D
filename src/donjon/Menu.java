@@ -3,7 +3,6 @@ package donjon;
 import donjon.equipement.itemDef.DefaultDef;
 import donjon.equipement.itemOff.*;
 import donjon.personnage.*;
-import javamysql.JavaMySql;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -17,7 +16,7 @@ import static donjon.WaitSecAndASCII.*;
 public class Menu {
     private final Scanner scanner;
     private final Game game;
-    private JavaMySql javaDB;
+    private SavePlayerMySql javaDB;
 
     /**
      * Constructor
@@ -25,7 +24,7 @@ public class Menu {
      * @param scanner Take scanner from main
      * @param game    Take a new game instance from main
      */
-    public Menu(Scanner scanner, Game game, JavaMySql javaDB) {
+    public Menu(Scanner scanner, Game game, SavePlayerMySql javaDB) {
         this.scanner = scanner;
         this.game = game;
         this.javaDB = javaDB;
@@ -184,8 +183,11 @@ public class Menu {
         if (Objects.equals(happy, "a")) {
             slowPrint("Alors c'est partie, GL HF ! ᕙ(`▿´)ᕗ \n", 30);
             this.game.setPlayer(newP);
-        } else {
+        } else if (happy.equalsIgnoreCase("b")) {
             modifyPersonnage();
+        } else {
+            slowPrint("Erreur de saisie, try again, 'a' ou 'b' \n",30);
+            welcomeNewHero(newP);
         }
     }
 

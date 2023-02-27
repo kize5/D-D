@@ -5,8 +5,8 @@ import donjon.ennemi.Ennemi;
 import donjon.ennemi.Spectre;
 
 public class ArcaneBlast extends Sort{
-    public ArcaneBlast(KindItemOff type, String nom, int atk) {
-        super(type, nom, atk);
+    public ArcaneBlast(KindItemOff type, String nom, int atk, String desc) {
+        super(type, nom, atk, desc);
     }
 
     public ArcaneBlast(){

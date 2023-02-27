@@ -3,9 +3,8 @@ package donjon.equipement.itemOff;
 abstract public class Arme extends EquipementOff{
 
 
-    public Arme(KindItemOff type, String nom, int atk) {
-        super(type, nom, atk);
-
+    public Arme(KindItemOff type, String nom, int atk, String desc) {
+        super(type, nom, atk, desc);
     }
 
     @Override

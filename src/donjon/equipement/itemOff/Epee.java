@@ -3,13 +3,14 @@ package donjon.equipement.itemOff;
 import donjon.ennemi.Ennemi;
 
 public class Epee extends Arme{
-    
+
+    public Epee(KindItemOff type, String nom, int atk, String desc) {
+        super(type, nom, atk, desc);
+    }
+
 //    KindItemOff type;
 //    String nom;
 //    int atk;
-    public Epee(KindItemOff type, String nom, int atk) {
-        super(type, nom, atk);
-    }
 
     @Override
     public int damageBoost(Ennemi ennemi) {
