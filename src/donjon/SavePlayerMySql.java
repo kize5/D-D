@@ -25,9 +25,9 @@ public class SavePlayerMySql {
 //
 //       Connection connection = DriverManager.getConnection(url,login,password);
     public void savePerso(Personnage player, Scanner scanner) {
-        slowPrint("Voulez vous sauvegarder votre personnage ? \n", 30);
-        slowPrint("Oui : press 'a' \n", 30);
-        slowPrint("Non press 'b' \n", 30);
+        slowPrint("Voulez vous sauvegarder votre personnage ? \n");
+        slowPrint("Oui : press 'a' \n");
+        slowPrint("Non press 'b' \n");
         String saveOrNot = scanner.nextLine();
         if (saveOrNot.equalsIgnoreCase("a")) {
             try {
@@ -103,14 +103,14 @@ public class SavePlayerMySql {
 
                 //Execute la request
                 pstmtPlayer.executeUpdate();
-                slowPrint("Personnage sauvegardé ! \n", 30);
+                slowPrint("Personnage sauvegardé ! \n");
             } catch (Exception ex) {
                 // handle any errors
                 System.out.println("SQLException: " + ex.getMessage());
                 ex.printStackTrace();
             }
         } else {
-            slowPrint("D'accord, alors bon chance pour la suite ! \n", 30);
+            slowPrint("D'accord, alors bon chance pour la suite ! \n");
         }
     }
 
@@ -140,7 +140,7 @@ public class SavePlayerMySql {
     }
 
     public Personnage getPersoFromDB(Scanner scanner) {
-        slowPrint("Entrer le nom du personnage que tu veux récupérer : \n", 30);
+        slowPrint("Entrer le nom du personnage que tu veux récupérer : \n");
         String persoName = scanner.nextLine();
 
         try {
@@ -199,8 +199,9 @@ public class SavePlayerMySql {
             String typeItemOff = resItemOff.getString("type");
             String nomItemOff = resItemOff.getString("nom");
             int atkItemOff = resItemOff.getInt("atk");
+            String descItemOff = resItemOff.getString("drop_description");
             KindItemOff typeitoff = KindItemOff.valueOf(typeItemOff);
-            return createItemoff(typeitoff, nomItemOff, atkItemOff);
+            return createItemoff(typeitoff, nomItemOff, atkItemOff, descItemOff);
         } catch (Exception e) {
             System.out.println("SQLerror" + e.getMessage());
         }
@@ -255,17 +256,17 @@ public class SavePlayerMySql {
     }
 
     // factory à equipment offensif
-    private EquipementOff createItemoff(KindItemOff type, String nom, int atk) {
+    private EquipementOff createItemoff(KindItemOff type, String nom, int atk, String desc) {
         if (type == KindItemOff.Sword) {
-            return new Epee(type, nom, atk);
+            return new Epee(type, nom, atk, desc);
         } else if (type == KindItemOff.Arc) {
-            return new Arc(type, nom, atk);
+            return new Arc(type, nom, atk, desc);
         } else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Fire ball")) {
-            return new FireBall(type, nom, atk);
+            return new FireBall(type, nom, atk, desc);
         } else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Frost bolt")) {
-            return new FrostBolt(type, nom, atk);
+            return new FrostBolt(type, nom, atk, desc);
         } else if (type == KindItemOff.Spell && nom.equalsIgnoreCase("Arcane blast")) {
-            return new ArcaneBlast(type, nom, atk);
+            return new ArcaneBlast(type, nom, atk, desc);
         } else {
             return new DefaultOff();
         }

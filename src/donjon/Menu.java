@@ -34,24 +34,24 @@ public class Menu {
      * Choose hero class
      */
     private KindClass inputClass() {
-        slowPrint("As tu envie de jouer 'Mage' ou 'War' ? \n", 30);
+        slowPrint("As tu envie de jouer 'Mage' ou 'War' ? \n");
         String input = scanner.nextLine();// Read user input
         if (Objects.equals(input, "war") || Objects.equals(input, "War")) {
-            justwaitASec(500);
-            slowPrint(drawWarrior(), 3);
-            slowPrint("Oh tiens, un " + input + " ça faisait longtemps ! \n", 30);  // Output user input
+            justwaitASec();
+            slowPrintForAscii(drawWarrior());
+            slowPrint("Oh tiens, un " + input + " ça faisait longtemps ! \n");  // Output user input
             return KindClass.War;
         } else if (Objects.equals(input, "mage") || Objects.equals(input, "Mage")) {
-            justwaitASec(500);
-            slowPrint(drawMage(), 3);
-            slowPrint("Oh tiens, un " + input + " ça faisait longtemps ! \n", 30);  // Output user input
+            justwaitASec();
+            slowPrintForAscii(drawMage());
+            slowPrint("Oh tiens, un " + input + " ça faisait longtemps ! \n");  // Output user input
             return KindClass.Mage;
         } else if (Objects.equals(input, "exit")) {
             leave();
         }
-        justwaitASec(500);
-        slowPrint(drawMurloc(), 3);
-        slowPrint("Ha ! Tu ne sais pas écrire mage ou war ... Tu dois donc être un murloc \n", 30);  // Output user input
+        justwaitASec();
+        slowPrintForAscii(drawMurloc());
+        slowPrint("Ha ! Tu ne sais pas écrire mage ou war ... Tu dois donc être un murloc \n");  // Output user input
         return KindClass.Murloc;
     }
 
@@ -59,13 +59,13 @@ public class Menu {
      * Create hero name
      */
     private String inputName() {
-        slowPrint("Quel sera ton nom : \n", 30);
+        slowPrint("Quel sera ton nom : \n");
         String nom = scanner.nextLine();  // Read user input
         if (Objects.equals(nom, "exit")) {
             leave();
         }
-        justwaitASec(500);
-        slowPrint("Ha oui ? Étrange comme nom ça " + "'" + nom + "'" + ", mais bon, tu n'as pas choisi, si ? ... (•_•\") \n", 30);  // Output user input
+        justwaitASec();
+        slowPrint("Ha oui ? Étrange comme nom ça " + "'" + nom + "'" + ", mais bon, tu n'as pas choisi, si ? ... (•_•\") \n");  // Output user input
         return nom;
     }
 
@@ -73,13 +73,13 @@ public class Menu {
      * Enter of this game
      */
     public void start() {
-        slowPrint(WaitSecAndASCII.drawDadDonjon(), 5);
-        WaitSecAndASCII.justwaitASec(1000);
-        slowPrint("Tape 'A' puis 'entrée' pour entrer dans un nouveau bad Donjon \n", 30);
-        slowPrint("Tape 'exit' pour quitter à tout moment \n", 30);
+        slowPrintForAscii(WaitSecAndASCII.drawDadDonjon());
+        WaitSecAndASCII.justwaitASec();
+        slowPrint("Tape 'A' puis 'entrée' pour entrer dans un nouveau bad Donjon \n");
+        slowPrint("Tape 'exit' pour quitter à tout moment \n");
         String go = scanner.nextLine();  // Read user input
         if (Objects.equals(go, "a")) {
-            justwaitASec(500);
+            justwaitASec();
             saveOrNewPerso();
 //            createPersonnage();
             return;
@@ -87,15 +87,15 @@ public class Menu {
         if (Objects.equals(go, "exit")) {
             leave();
         } else {
-            slowPrint("Saisie incorrecte \n", 30);
+            slowPrint("Saisie incorrecte \n");
             start();
         }
     }
 
     private void saveOrNewPerso() {
-        slowPrint("Alors c'est partie, créons ton perso ! \n", 30);
-        slowPrint("Appuie sur 'a' pour récupérer ton perso sauvegardé \n",30);
-        slowPrint("Appuie sur 'b' pour créer un nouveau perso \n",30);
+        slowPrint("Alors c'est partie, créons ton perso ! \n");
+        slowPrint("Appuie sur 'a' pour récupérer ton perso sauvegardé \n");
+        slowPrint("Appuie sur 'b' pour créer un nouveau perso \n");
         String persoSaveOrNot = scanner.nextLine();
         if (persoSaveOrNot.equalsIgnoreCase("a")) {
             Personnage newP = javaDB.getPersoFromDB(scanner);
@@ -103,7 +103,7 @@ public class Menu {
         } else if (persoSaveOrNot.equalsIgnoreCase("b")) {
             createPersonnage();
         } else {
-            slowPrint("Saisie incorrect \n",30);
+            slowPrint("Saisie incorrect \n");
             saveOrNewPerso();
         }
     }
@@ -117,7 +117,7 @@ public class Menu {
         //random method for class and hp here
         int hp = generateRandomHP(pClass);
         int atk = generateRandomAtk(pClass);
-        slowPrint("Si voulez vous commencer la partie avec une arme équipé press 'a' sinon press 'b' (Plus équilibré sans) \n", 30);
+        slowPrint("Si voulez vous commencer la partie avec une arme équipé press 'a' sinon press 'b' (Plus équilibré sans) \n");
         String weaponOrNot = scanner.nextLine();
         if (weaponOrNot.equalsIgnoreCase("a")) {
             Personnage newP = chooseClasseWithWeapon(pClass, name, hp, atk);
@@ -145,21 +145,21 @@ public class Menu {
 
     private Personnage chooseClasseWithWeapon(KindClass pClass, String name, int hp, int atk) {
         if (pClass == KindClass.Mage) {
-            slowPrint("Si tu veux commencer avec Frost bolt press 'a' ou avec Arcane blast press 'b', jeune tricheur ? \n", 30);
+            slowPrint("Si tu veux commencer avec Frost bolt press 'a' ou avec Arcane blast press 'b', jeune tricheur ? \n");
             String spell = scanner.nextLine();
             if (spell.equalsIgnoreCase("a")) {
-                return new Mage(name, pClass, hp, atk, new FrostBolt(KindItemOff.Spell, "Frost bolt", 3), new DefaultDef());
+                return new Mage(name, pClass, hp, atk, new FrostBolt(KindItemOff.Spell, "Frost bolt", 3, "Tu viens de trouver un sort de givre, pas mal ça, tu vas les geler sur place !  \n"), new DefaultDef());
             } else if (spell.equalsIgnoreCase("b")) {
-                return new Mage(name, pClass, hp, atk, new ArcaneBlast(KindItemOff.Spell, "Arcane blast", 4), new DefaultDef());
+                return new Mage(name, pClass, hp, atk, new ArcaneBlast(KindItemOff.Spell, "Arcane blast", 4, "Oooh l'arcane blast, tu vas pouvoir frapper tes ennemies avec la magie arcanique !  \n"), new DefaultDef());
             } else chooseClass(pClass, name, hp, atk);
         }
         if (pClass == KindClass.War) {
-            slowPrint("Si tu veux commencer avec Lépéquipik press 'a' ou avec les Wargalives press 'b', jeune tricheur ? \n", 30);
+            slowPrint("Si tu veux commencer avec Lépéquipik press 'a' ou avec les Wargalives press 'b', jeune tricheur ? \n");
             String sword = scanner.nextLine();
             if (sword.equalsIgnoreCase("a")) {
-                return new War(name, pClass, hp, atk, new Epee(KindItemOff.Sword, "Lépéquipik", 2), new DefaultDef());
+                return new War(name, pClass, hp, atk, new Epee(KindItemOff.Sword, "Lépéquipik", 2, "Wow tu viens de trouver lépékipique, attention, ça pique ... \n "), new DefaultDef());
             } else if (sword.equalsIgnoreCase("b")) {
-                return new War(name, pClass, hp, atk, new Epee(KindItemOff.Sword, "Warglaives", 4), new DefaultDef());
+                return new War(name, pClass, hp, atk, new Epee(KindItemOff.Sword, "Warglaives", 4, "Tu viens de loot les warglaives ! Ils ne sont pas prêts ! \n"), new DefaultDef());
             } else chooseClass(pClass, name, hp, atk);
         }
         return new Murloc(name, pClass, hp, atk);
@@ -170,23 +170,23 @@ public class Menu {
      * Welcome to the new hero and allow reset hero
      */
     private void welcomeNewHero(Personnage newP) {
-        justwaitASec(1500);
-        slowPrint("Bienvenue à toi " + newP.getNom() + ", tu es donc un " + newP.getType() + ", débutant visiblement ... \n", 30);
-        justwaitASec(1500);
+        justwaitASec();
+        slowPrint("Bienvenue à toi " + newP.getNom() + ", tu es donc un " + newP.getType() + ", débutant visiblement ... \n");
+        justwaitASec();
 //        slowPrint();("Tu es donc un " + newP.getType() + " je vois ...");
 //        justwaitASec(500);
-        slowPrint("Tu possèdes *" + newP.getHp() + "* point de vie." + " Et ton score d'attaque est de *" + newP.getAtk() + "*, pas fou tout ça ... (ㆆ_ㆆ) \n", 30);
+        slowPrint("Tu possèdes *" + newP.getHp() + "* point de vie." + " Et ton score d'attaque est de *" + newP.getAtk() + "*, pas fou tout ça ... (ㆆ_ㆆ) \n");
 //        slowPrint();("Et ton score d'attaque est de *" + newP.getAtk() + "*");
-        justwaitASec(1500);
-        slowPrint("Si tu es satisfait de ton personnage appuie sur a et c'est partie, sinon appuie sur b (Seul les faibles appuient sur b) \n", 30);
+        justwaitASec();
+        slowPrint("Si tu es satisfait de ton personnage appuie sur a et c'est partie, sinon appuie sur b (Seul les faibles appuient sur b) \n");
         String happy = scanner.nextLine();
         if (Objects.equals(happy, "a")) {
-            slowPrint("Alors c'est partie, GL HF ! ᕙ(`▿´)ᕗ \n", 30);
+            slowPrint("Alors c'est partie, GL HF ! ᕙ(`▿´)ᕗ \n");
             this.game.setPlayer(newP);
         } else if (happy.equalsIgnoreCase("b")) {
             modifyPersonnage();
         } else {
-            slowPrint("Erreur de saisie, try again, 'a' ou 'b' \n",30);
+            slowPrint("Erreur de saisie, try again, 'a' ou 'b' \n");
             welcomeNewHero(newP);
         }
     }
@@ -197,9 +197,9 @@ public class Menu {
     private void modifyPersonnage() {
         String name = this.inputName();
         KindClass pClass = this.inputClass();
-        slowPrint("Combien de hp veux tu ? : \n", 30);
+        slowPrint("Combien de hp veux tu ? : \n");
         int health = Integer.parseInt(scanner.nextLine());
-        slowPrint("A combien s'élève ton attaque ? : \n", 30);
+        slowPrint("A combien s'élève ton attaque ? : \n");
         int atk = Integer.parseInt(scanner.nextLine());
         Personnage newPmod = chooseClass(pClass, name, health, atk);
         welcomeNewHero(newPmod);
@@ -229,7 +229,7 @@ public class Menu {
      * Allow user to leave game
      */
     protected void leave() {
-        slowPrint("Tu es donc un lâche... Adieu (Mais merci quand même d'avoir joué !) \n", 30);
+        slowPrint("Tu es donc un lâche... Adieu (Mais merci quand même d'avoir joué !) \n");
         game.leaveGame = true;
     }
 }

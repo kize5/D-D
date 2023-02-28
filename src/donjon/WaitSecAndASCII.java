@@ -8,24 +8,33 @@ public class WaitSecAndASCII {
      * Permet d'ajouter du délai entre l'écriture des lignes dans la console
      */
 //*********Remettre nbMillisecond à la place de 1 dans le Thead.sleep
-    public static void justwaitASec(int nbMillisecond) {
+    public static void justwaitASec() {
         try {
-            Thread.sleep(1);
+            Thread.sleep(0);
         } catch (InterruptedException ignored) {}
     }
 
     /**
      * Permet d'ajouter du délai dans l'écriture du text dans la console
      * @param output le text à afficher dans la console
-     * @param slowPrintTime le temps d'écriture en millisecond entre chaque caractère
      */
     //*********Remettre slowPrintTime à la place de 0 dans le TimeUnit
-    public static void slowPrint(String output, int slowPrintTime) {
+    public static void slowPrint(String output) {
         for (int i = 0; i<output.length(); i++) {
             char c = output.charAt(i);
             System.out.print(c);
             try {
-                TimeUnit.MILLISECONDS.sleep(0);
+                TimeUnit.MILLISECONDS.sleep(15);
+            }
+            catch (Exception ignored) {}
+        }
+    }
+    public static void slowPrintForAscii(String output) {
+        for (int i = 0; i<output.length(); i++) {
+            char c = output.charAt(i);
+            System.out.print(c);
+            try {
+                TimeUnit.MILLISECONDS.sleep(2);
             }
             catch (Exception ignored) {}
         }
@@ -471,8 +480,8 @@ public class WaitSecAndASCII {
                  .-'-'-.
                 /-::_..-\\
                 )_     _(
-                |;::Z   | 
-                |;::Z   | 
+                |;::Z   |\s
+                |;::Z   |\s
                 |;::Z   |
                 |;::-.._|
                 `-.._..-'   \n

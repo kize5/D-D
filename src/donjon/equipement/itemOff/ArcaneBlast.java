@@ -10,7 +10,7 @@ public class ArcaneBlast extends Sort{
     }
 
     public ArcaneBlast(){
-        super(KindItemOff.Spell, "arcane blast", 5);
+        super(KindItemOff.Spell, "arcane blast", 5, "Oooh l'arcane blast, tu vas pouvoir frapper tes ennemies avec la magie arcanique !  \n");
     }
     public int damageBoost(Ennemi ennemi) {
         if (ennemi instanceof Spectre) {

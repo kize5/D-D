@@ -4,7 +4,7 @@ import donjon.ennemi.Ennemi;
 
 public class DefaultOff extends EquipementOff{
     public DefaultOff() {
-        super(KindItemOff.Default, "main nue", 0);
+        super(KindItemOff.Default, "main nue", 0, "Karate mode \n");
     }
 
     @Override
